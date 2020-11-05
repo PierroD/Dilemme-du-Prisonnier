@@ -22,35 +22,33 @@
 
 #include "clientcxnmanager.h"
 
-
 /*
  * 
  */
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
+	int sockfd;
+	int status = 0;
+	char msg[100];
+	pthread_t thread;
 
-    int sockfd;
-    int status = 0;
-    char msg[100];
-    pthread_t thread;
+	sockfd = open_connection();
 
-    sockfd = open_connection();
+	strcpy(msg, "Hello from Xeon"); //Xeon is the name of the this client
+	printf("sending : %s\n", msg);
+	write(sockfd, msg, strlen(msg));
 
-    strcpy(msg, "Hello from Client"); //Xeon is the name of the this client
-    printf("sending : %s\n", msg);
-    write(sockfd, msg, strlen(msg));
+	//Creation d'un pthread de lecture
+	pthread_create(&thread, 0, threadProcess, &sockfd);
+	//write(connection->sock,"Main APP Still running",15);
+	pthread_detach(thread);
+	do {
+		fgets(msg, 100, stdin);
+		//printf("sending : %s\n", msg);
+		status = write(sockfd, msg, strlen(msg));
+		//memset(msg,'\0',100);
+	} while (status != -1);
 
-    //Creation d'un pthread de lecture
-    pthread_create(&thread, 0, threadProcess, &sockfd);
-    //write(connection->sock,"Main APP Still running",15);
-    pthread_detach(thread);
-    do {
-        fgets(msg, 100, stdin);
-        //printf("sending : %s\n", msg);
-        status = write(sockfd, msg, strlen(msg));
-        //memset(msg,'\0',100);
-    } while (status != -1);
-
-    return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
