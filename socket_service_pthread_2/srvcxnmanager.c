@@ -73,12 +73,12 @@ void *threadProcess(void *ptr) {
         if (strncmp(buffer_in, "bye", 3) == 0) {
             break;
         }
-#if DEBUG
+/*#if DEBUG
         printf("DEBUG-----------------------------------------------------------\n");
         printf("len : %i\n", len);
         printf("Buffer : %.*s\n", len, buffer_in);
         printf("----------------------------------------------------------------\n");
-#endif
+#endif*/
         strcpy(buffer_out, "\nServer Echo : ");
         strncat(buffer_out, buffer_in, len);
 

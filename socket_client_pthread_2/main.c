@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
     sockfd = open_connection();
 
-    strcpy(msg, "Hello from Xeon"); //Xeon is the name of the this client
+    strcpy(msg, "Hello from Client"); //Xeon is the name of the this client
     printf("sending : %s\n", msg);
     write(sockfd, msg, strlen(msg));
 
