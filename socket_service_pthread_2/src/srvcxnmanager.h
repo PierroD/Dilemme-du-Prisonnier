@@ -16,6 +16,7 @@
 #define BUFFERSIZE 2048
 #define MAXSIMULTANEOUSCLIENTS 100
 
+
 typedef struct {
     int sockfd;
     struct sockaddr address;
