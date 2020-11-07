@@ -9,17 +9,25 @@
 #include <arpa/inet.h>
 
 #include "srvcxnmanager.h"
-#include "ini.h"
+#include "utils/ini.h"
+#include "utils/configreader.h"
+
 connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
+int getMaxSimultaneousClients()
+{
+    ini_t *config = ini_load("serverConfig.ini");
+    return atoi(ini_get(config, "network", "max_silmutaneous_connection"));
+}
+
 void init_sockets_array() {
-    for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
+    for (int i = 0; i < getMaxSimultaneousClients(); i++) {
         connections[i] = NULL;
     }
 }
 
 void add(connection_t *connection) {
-    for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
+    for (int i = 0; i < getMaxSimultaneousClients(); i++) {
         if (connections[i] == NULL) {
             connections[i] = connection;
             return;
@@ -30,7 +38,7 @@ void add(connection_t *connection) {
 }
 
 void del(connection_t *connection) {
-    for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
+    for (int i = 0; i < getMaxSimultaneousClients(); i++) {
         if (connections[i] == connection) {
             connections[i] = NULL;
             return;
@@ -83,7 +91,7 @@ void *threadProcess(void *ptr) {
         strncat(buffer_out, buffer_in, len);
 
         if (buffer_in[0] == '@') {
-            for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
+            for (int i = 0; i < getMaxSimultaneousClients(); i++) {
                 if (connections[i] != NULL) {
                     write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
                 }
@@ -91,7 +99,7 @@ void *threadProcess(void *ptr) {
         } else if (buffer_in[0] == '#') {
             int client = 0;
             int read = sscanf(buffer_in, "%*[^0123456789]%d ", &client);
-            for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
+            for (int i = 0; i < getMaxSimultaneousClients(); i++) {
                 if (client == connections[i]->index) {
                     write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
                     break;
@@ -113,11 +121,13 @@ void *threadProcess(void *ptr) {
 }
 
 int create_server_socket() {
-	ini_t *config = ini_load("configServeur.ini");
+	ini_t *config = ini_load("serverConfig.ini");
     int sockfd = -1;
     struct sockaddr_in address;
-    int port = atoi(ini_get(config, "network", "port"));
 
+    Config *configuration;
+    read_configuration(configuration, "games.cfg");
+   
     /* create socket */
     sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sockfd <= 0) {
@@ -132,8 +142,8 @@ int create_server_socket() {
     //address.sin_addr.s_addr = INADDR_ANY;
     //ou 0.0.0.0 
     //Sinon  127.0.0.1
-    address.sin_addr.s_addr = inet_addr(ini_get(config, "network", "ipaddress"));
-    address.sin_port = htons(port);
+    address.sin_addr.s_addr = inet_addr(ini_get(config, "network", "server_ip_address"));
+    address.sin_port = htons(atoi(ini_get(config, "network", "server_port")));
 
     /* prevent the 60 secs timeout */
     int reuse = 1;
@@ -141,7 +151,7 @@ int create_server_socket() {
 
     /* bind */
     if (bind(sockfd, (struct sockaddr *) &address, sizeof (struct sockaddr_in)) < 0) {
-        fprintf(stderr, "error: cannot bind socket to port %d\n", port);
+        fprintf(stderr, "error: cannot bind socket to port %d\n", atoi(ini_get(config, "network", "server_port")));
         return -4;
     }
 

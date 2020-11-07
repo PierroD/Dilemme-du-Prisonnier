@@ -23,7 +23,6 @@
 #include <stdbool.h>
 
 #include "srvcxnmanager.h"
-
 /*
  *
  */
