@@ -249,7 +249,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_T" object="show_answer" swapped="no"/>
+                <signal name="clicked" handler="on_click_T" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>

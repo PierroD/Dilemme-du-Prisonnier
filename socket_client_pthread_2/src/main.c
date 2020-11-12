@@ -27,16 +27,79 @@
 GtkBuilder *builder = NULL;
 
 
-void on_pressed(){
+// void on_pressed(){
 
-	g_print("%s", "j'ai clicke");
+// 	g_print("%s", "j'ai clicke");
 	
-	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
-	gtk_progress_bar_set_fraction(progressBar, 0.90 );
-} 
-/*
- * 
- */
+// 	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
+// 	gtk_progress_bar_set_fraction(progressBar, 0.90 );
+// } 
+
+// void on_button_click() {
+//     printf("bouton 'Yes' clicked\n");
+//     GtkEntry *texte = GTK_ENTRY(gtk_builder_get_object(builder, "texte"));
+//     gchar *data = (gchar *) gtk_entry_get_text(texte);
+//     GtkEntry *echo = GTK_ENTRY(gtk_builder_get_object(builder, "echo"));
+//     gtk_entry_set_text(echo, data);
+// }
+
+void on_click_C(GtkButton *button, GtkLabel *label) {
+
+	
+	gtk_label_set_text(label, "Collaborer");
+	send_answer(1);
+	
+}
+
+void on_click_T(GtkButton *button, GtkLabel *label) {
+
+	gtk_label_set_text(label, "Trahir");
+	send_answer(2);
+	
+}
+
+void send_answer(int answer) {
+
+	switch (answer)
+	{
+	case 1:
+		//Un jour peut etre
+		break;
+	case 2:
+		//Un jour peut etre
+		break;
+	
+	default: 
+		return -1;
+		break;
+	}
+	
+}
+
+void on_cancel() {
+    GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+            GTK_MESSAGE_WARNING,
+            GTK_BUTTONS_OK_CANCEL,
+            "This action will cause the universe to stop existing.");
+    //cf : http://refspecs.linuxbase.org/gtk/2.6/gtk/GtkMessageDialog.html
+    //https://developer.gnome.org/gnome-devel-demos/stable/messagedialog.c.html.en
+    unsigned int pressed = gtk_dialog_run(GTK_DIALOG(message_dialog));
+    if (pressed == GTK_RESPONSE_OK) {
+        printf("OK Pressed \n");
+        printf("quitting\n ");
+        gtk_widget_destroy(message_dialog);
+        gtk_main_quit();
+    } else {
+        printf("CANCEL Pressed \n");
+        gtk_widget_destroy(message_dialog);
+    }
+}
+
+void on_window_main_destroy() {
+    printf("quitting\n ");
+    gtk_main_quit();
+}
+
 int main(int argc, char **argv) {
 
 	GtkWidget *win;
