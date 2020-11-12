@@ -8,7 +8,9 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
+
 #include "clientcxnmanager.h"
+#include "utils/ini.h"
 
 void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
@@ -29,8 +31,9 @@ void *threadProcess(void * ptr) {
 int open_connection() {
     int sockfd;
 
+    ini_t *config = ini_load("config.ini");
     struct sockaddr_in serverAddr;
-    int port = 7799;
+
 
     // Create the socket. 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -39,9 +42,9 @@ int open_connection() {
     // Address family is Internet 
     serverAddr.sin_family = AF_INET;
     //Set port number, using htons function 
-    serverAddr.sin_port = htons(port);
+    serverAddr.sin_port = htons(atoi(ini_get(config, "Settings", "port")));
     //Set IP address to localhost
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddr.sin_addr.s_addr = inet_addr(ini_get(config, "Settings", "server"));
 
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
