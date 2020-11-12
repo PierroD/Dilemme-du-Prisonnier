@@ -1,44 +1,92 @@
-CC		:= gcc
-CFLAGS	:= -Wall -Wextra -g -std=c99
+#
+# 'make'        build executable file 'main'
+# 'make clean'  removes all .o and executable files
+#
 
-BIN		:= bin
+# define the C compiler to use
+CC = gcc 
+GTK1 = `pkg-config --cflags gtk+-3.0`
+GTK2 = `pkg-config --libs gtk+-3.0`
+# define any compile-time flags
+CFLAGS	:= -Wall -Wextra -g -rdynamic
+
+# define library paths in addition to /usr/lib
+#   if I wanted to include libraries not in /usr/lib I'd specify
+#   their path using -Lpath, something like:
+LFLAGS = -lpthread
+
+# define output directory
+OUTPUT	:= output
+
+# define source directory
 SRC		:= src
+
+# define include directory
 INCLUDE	:= include
+
+# define lib directory
 LIB		:= lib
 
-LIBRARIES	:= -lpthread
-DOXYGENCONF = Doxyfile
 ifeq ($(OS),Windows_NT)
-EXECUTABLE	:= main.exe
+MAIN	:= main.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)
+FIXPATH = $(subst /,\,$1)
+RM			:= del /q /f
+MD	:= mkdir
 else
-EXECUTABLE	:= client
+MAIN	:= main
 SOURCEDIRS	:= $(shell find $(SRC) -type d)
 INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
 LIBDIRS		:= $(shell find $(LIB) -type d)
+FIXPATH = $1
+RM = rm -f
+MD	:= mkdir -p
 endif
 
-CINCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
-CLIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
+# define any directories containing header files other than /usr/include
+INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
 
+# define the C libs
+LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
+
+# define the C source files
 SOURCES		:= $(wildcard $(patsubst %,%/*.c, $(SOURCEDIRS)))
+
+# define the C object files 
 OBJECTS		:= $(SOURCES:.c=.o)
 
-all: $(BIN)/$(EXECUTABLE)
+#
+# The following part of the makefile is generic; it can be used to 
+# build any executable just by changing the definitions above and by
+# deleting dependencies appended to the file from 'make depend'
+#
+
+OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
+
+all: $(OUTPUT) $(MAIN)
+	@echo Executing 'all' complete!
+
+$(OUTPUT):
+	$(MD) $(OUTPUT)
+
+$(MAIN): $(OBJECTS) 
+	$(CC) $(CFLAGS) $(GTK1) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS) $(GTK2)
+
+# this is a suffix replacement rule for building .o's from .c's
+# it uses automatic variables $<: the name of the prerequisite of
+# the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
+# (see the gnu make manual section about automatic variables)
+.c.o:
+	$(CC) $(GTK1) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 .PHONY: clean
 clean:
-	-$(RM) $(BIN)/$(EXECUTABLE)
-	-$(RM) $(OBJECTS)
-
+	$(RM) $(OUTPUTMAIN)
+	$(RM) $(call FIXPATH,$(OBJECTS))
+	@echo Cleanup complete!
 
 run: all
-	./$(BIN)/$(EXECUTABLE)
-
-documentation:
-	-doxygen $(DOXYGENCONF)
-
-$(BIN)/$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(CINCLUDES) $(CLIBS) $^ -o $@ $(LIBRARIES)
+	./$(OUTPUTMAIN)
+	@echo Executing 'run: all' complete!

@@ -22,10 +22,34 @@
 
 #include "clientcxnmanager.h"
 
+#include <gtk/gtk.h>
+
+GtkBuilder *builder = NULL;
+
+
+void on_pressed(){
+
+	g_print("%s", "j'ai clicke");
+	
+	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
+	gtk_progress_bar_set_fraction(progressBar, 0.90 );
+} 
 /*
  * 
  */
 int main(int argc, char **argv) {
+
+	GtkWidget *win;
+
+    gtk_init(&argc, &argv);
+    builder = gtk_builder_new_from_file("glade/newInterface.glade");
+    win = GTK_WIDGET(gtk_builder_get_object(builder, "app_win"));
+    gtk_builder_connect_signals(builder, NULL);
+    gtk_widget_show(win);
+    gtk_main();
+    return (EXIT_SUCCESS);
+
+
 
 	int sockfd;
 	int status = 0;
