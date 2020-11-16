@@ -53,27 +53,24 @@ void add(connection_t *connection) {                             // -+- void -> 
 }
 
 
-/*
 void configurationRoom(connection_t *connection){                             // +++ Configuration du Room
-    for (int i = 0; i < getMaxSimultaneousClients(); i++) {
-        if (room[i] == NULL){
-            room[i]->name = "Room_1";
-        }
-
-        if (room[i]->pl1 == NULL){
-            room[i]->pl1 = pl[i];
+    for (int i = 0; i < getMaxSimultaneousClients()/2; i++) {
+        if (room[i].pl1 == 0){
+            room[i].name = "1";
+            room[i].pl1 = &pl[i];
             return;
         }
 
-        if (room[i]->pl2 == NULL){
-            room[i]->pl2 = pl[i];
+        if (room[i].pl2 == 0){
+            room[i].pl2 = &pl[i+1];
+            room[i].game_number = 1;
             return;
         }
     }
     perror("Error in room creation");
     //exit(-5);
 }
-*/
+
 
 
 void del(connection_t *connection) {
@@ -109,7 +106,7 @@ void *threadProcess(void *ptr) {
     printf("New incoming connection \n");
 
     add(connection);                                            // +++ Ajout de int potion
-    //configurationRoom(connection);                              // +++ Appel de la fonction de configuration de Room
+    configurationRoom(connection);                              // +++ Appel de la fonction de configuration de Room
     
 
     printf("Client 1 %d\n",pl[0].point);
@@ -138,9 +135,16 @@ void *threadProcess(void *ptr) {
             pl[connection->index-1].ready = 1;
         }
 
-        // +++ if the 2 player are ready the game will start
-        if (pl[0].ready == 1 && pl[1].ready == 1 && pl[0].ocupation == 1 && pl[1].ocupation == 1){
-            printf("The players are ready !\n");
+        // +++ if the 2 player of the room are ready the game will start
+        for (int i = getMaxSimultaneousClients()/2-1; i>=0; i--){
+            if (room[i].game_number == 1){
+                if (room[i].pl1[i].ready == 1 && room[i].pl2[i].ready == 1 && room[i].pl1[i].ocupation == 1 && room[i].pl2[i].ocupation == 1){
+                    printf("The players are ready !\n");
+                    printf("index %d\n", room[0].pl1[0].cnx->index);
+                    printf("index %d\n", room[0].pl1[1].cnx->index);
+                    room[i].game_number = 2;
+                }
+            }
         }
 
         if (strncmp(buffer_in, "bye", 3) == 0) {

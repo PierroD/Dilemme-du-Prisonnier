@@ -33,8 +33,9 @@ typedef struct {
 
 typedef struct {
     char* name;
-    Player_client *pl1;
-    Player_client *pl2;
+    int game_number;
+    Player_client* pl1;
+    Player_client* pl2;
 } Room_of_palyer;
 
 void init_sockets_array();
