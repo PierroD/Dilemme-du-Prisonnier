@@ -38,6 +38,7 @@ typedef struct {
     Player_client* pl2;
 } Room_of_palyer;
 
+
 void init_sockets_array();
 void add(connection_t *connection);
 void del(connection_t *connection);

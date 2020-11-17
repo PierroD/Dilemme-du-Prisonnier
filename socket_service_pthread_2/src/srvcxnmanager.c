@@ -71,6 +71,53 @@ void configurationRoom(connection_t *connection){                             //
     //exit(-5);
 }
 
+// +++ Le salon de game
+void game_start(int game_room){
+    char buffer_in_pl1[BUFFERSIZE];
+    char buffer_in_pl2[BUFFERSIZE];
+    char buffer_out[BUFFERSIZE];
+    int len_pl1;
+    int len_pl2;
+    int round = 0;
+    
+    printf("\n\n\n");
+
+    printf("Toi tu est joueur #%d\n", room[game_room].pl1->cnx->index);
+    sprintf(buffer_out, "Collaborer ou trahir joueur 2\n");
+    write(room[game_room].pl1->cnx->sockfd, buffer_out, strlen(buffer_out));
+
+    printf("Toi tu est joueur #%d\n", room[game_room].pl2->cnx->index);
+    sprintf(buffer_out, "Collaborer ou trahir joueur 1\n");
+    write(room[game_room].pl2->cnx->sockfd, buffer_out, strlen(buffer_out));
+
+    printf("\n\n\n");
+
+    while ((len_pl1 = read(room[game_room].pl1->cnx->sockfd, buffer_in_pl1, BUFFERSIZE)) > 0 || (len_pl2 = read(room[game_room].pl2->cnx->sockfd, buffer_in_pl2, BUFFERSIZE)) > 0 || round != 3){
+        // +++ Si le joueur 1 collabore
+        if (strncmp(buffer_in_pl1, "collaborer", strlen("collaborer")) == 0) {
+            printf("Joueur %d collabore\n", room[game_room].pl1->cnx->index);
+            room[game_room].pl2->point += 10;
+            round += 1;
+            printf("Point de joueur 2 : %d\n", room[game_room].pl2->point);
+            sprintf(buffer_in_pl1, "");
+        }
+
+
+        // +++ Si le joueur 1 trahi
+        if (strncmp(buffer_in_pl1, "trahir", strlen("trahir")) == 0) {
+            printf("Joueur %d trahi \n", room[game_room].pl1->cnx->index);
+            room[game_room].pl2->point += 10;
+            round += 1;
+            printf("Point de joueur 2 : %d", room[game_room].pl2->point);
+            printf(buffer_in_pl1, "");
+
+        }
+
+    }
+
+    printf("\nLa partie est terminee\n");
+}
+
 
 
 void del(connection_t *connection) {
@@ -120,14 +167,14 @@ void *threadProcess(void *ptr) {
     //Welcome the new client
     printf("Welcome #%i\n", connection->index);
     sprintf(buffer_out, "Welcome #%i\n", connection->index);
-    write(connection->sockfd, buffer_out, strlen(buffer_out));                      // +++ Precision de quelle playe il s'agit
+    write(connection->sockfd, buffer_out, strlen(buffer_out));
 
 
     // Ask if the player is ready
     sprintf(buffer_out, "Are you ready #%i\n", connection->index);
-    write(connection->sockfd, buffer_out, strlen(buffer_out));                      // +++ Precision de quelle player il s'agit
+    write(connection->sockfd, buffer_out, strlen(buffer_out));
 
-    while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {           // +++ Precision de quelle player il s'agit
+    while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
         // +++ The player write ready if he is ready
         if (strncmp(buffer_in, "ready", strlen("ready")) == 0) {
@@ -143,6 +190,7 @@ void *threadProcess(void *ptr) {
                     printf("index %d\n", room[0].pl1[0].cnx->index);
                     printf("index %d\n", room[0].pl1[1].cnx->index);
                     room[i].game_number = 2;
+                    game_start(i);
                 }
             }
         }
