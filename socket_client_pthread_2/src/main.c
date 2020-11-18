@@ -47,34 +47,39 @@ void on_click_C(GtkButton *button, GtkLabel *label) {
 
 	
 	gtk_label_set_text(label, "Collaborer");
-	send_answer(1);
+	valide_answer(1);
 	
 }
 
 void on_click_T(GtkButton *button, GtkLabel *label) {
 
 	gtk_label_set_text(label, "Trahir");
-	send_answer(2);
+	valide_answer(2);
 	
 }
 
-void send_answer(int answer) {
-
-	switch (answer)
-	{
-	case 1:
-		//Un jour peut etre
-		break;
-	case 2:
-		//Un jour peut etre
-		break;
-	
-	default: 
-		return -1;
-		break;
-	}
+void valide_answer(GtkButton *Button, GtkLabel *label) {
+	gtk_label_set_text(label, "En attente de l'autre joueur ...");
 	
 }
+
+// void valide_answer(int answer) {
+
+// 	switch (answer)
+// 	{
+// 	case 1:
+// 		//Un jour peut etre
+// 		break;
+// 	case 2:
+// 		//Un jour peut etre
+// 		break;
+	
+// 	default: 
+// 		return -1;
+// 		break;
+// 	}
+	
+// }
 
 void on_cancel() {
     GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,

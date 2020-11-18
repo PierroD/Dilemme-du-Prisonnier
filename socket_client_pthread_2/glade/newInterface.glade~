@@ -140,6 +140,9 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">--&gt; Echo : </property>
+                <attributes>
+                  <attribute name="font-desc" value="STIX Bold Italic 11"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -148,11 +151,13 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="text_answer">
+              <object class="GtkLabel" id="show_text">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="margin_left">20</property>
-                <property name="margin_right">10</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">&gt; En attente de l'autre joueur ... &lt;</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold 12"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -206,6 +211,10 @@ Que voulez vous faire ?</property>
                 <property name="valign">center</property>
                 <property name="margin_start">100</property>
                 <property name="margin_end">100</property>
+                <property name="label" translatable="yes">test</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold 12"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -249,7 +258,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_T" swapped="no"/>
+                <signal name="clicked" handler="on_click_T" object="show_answer" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
