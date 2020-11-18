@@ -28,12 +28,21 @@
 GtkBuilder *builder = NULL;
 
 
-void on_pressed(){
+void on_progress(){
 
-	g_print("%s", "j'ai clicke");
-	
+	g_print("%s", "je progresse");
+	double pgrsBar = 0; //valeurs entre 0 et 1
+	int timer = 30; 
+	int timerb = timer;
+	double div;
 	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
-	gtk_progress_bar_set_fraction(progressBar, 0.90 );
+	for (int i = 0; i > timer; i++){
+		delay(1000);
+		
+		div = timerb / 10; 
+		pgrsBar += div;
+	}
+	gtk_progress_bar_set_fraction(progressBar, pgrsBar );
 } 
 
 // void on_button_click() {
@@ -46,7 +55,6 @@ void on_pressed(){
 
 void on_click_C(GtkButton *button, GtkLabel *label) {
 
-	
 	gtk_label_set_text(label, "Collaborer");
 	send_answer(1);
 	
@@ -62,7 +70,7 @@ void on_click_T(GtkButton *button, GtkLabel *label) {
 void delay(unsigned int msecs){
     clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
     while (goal > clock())
-        ;
+        ; 
 }
 
 void valide_answer(GtkButton *button, GtkLabel *label) {
@@ -70,7 +78,11 @@ void valide_answer(GtkButton *button, GtkLabel *label) {
 	
 }
 
-
+void delay(unsigned int msecs){
+    clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
+    while (goal > clock())
+    	;	 
+}
 
 void send_answer(int answer) {
 
