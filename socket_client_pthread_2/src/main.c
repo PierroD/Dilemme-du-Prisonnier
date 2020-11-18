@@ -28,22 +28,36 @@
 GtkBuilder *builder = NULL;
 
 
-void on_progress(){
+void on_progress(GtkButton *button){
 
 	g_print("%s", "je progresse");
-	double pgrsBar = 0; //valeurs entre 0 et 1
-	int timer = 30; 
-	int timerb = timer;
-	double div;
-	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
-	for (int i = 0; i > timer; i++){
+
+	int timer = 30;
+	char txt[100]; 
+
+	
+	for (int i = 0; i <= timer; i++){
+
+		GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
+		gtk_progress_bar_set_fraction(progressBar, (double)i/timer );//valeurs entre 0 et 1 --- + cast
+
+		GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(builder, "time_display"));
+		snprintf(txt, 100, "%03i", i);
+    	gtk_label_set_text(timelabel, txt);
+
+		while (gtk_events_pending()){
+			gtk_main_iteration();
+		}
+
 		delay(1000);
+
 		
-		div = timerb / 10; 
-		pgrsBar += div;
+
 	}
-	gtk_progress_bar_set_fraction(progressBar, pgrsBar );
-} 
+
+}
+
+ 
 
 // void on_button_click() {
 //     printf("bouton 'Yes' clicked\n");
@@ -69,19 +83,14 @@ void on_click_T(GtkButton *button, GtkLabel *label) {
 
 void delay(unsigned int msecs){
     clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
-    while (goal > clock())
-        ; 
+    while (goal > clock()){
+
+	};
 }
 
 void valide_answer(GtkButton *button, GtkLabel *label) {
-	gtk_label_set_text(label, "> En attente de l'autre joueur ... <");
+	gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
 	
-}
-
-void delay(unsigned int msecs){
-    clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
-    while (goal > clock())
-    	;	 
 }
 
 void send_answer(int answer) {
