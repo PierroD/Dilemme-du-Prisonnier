@@ -42,8 +42,6 @@ void add(connection_t *connection) {                             // -+- void -> 
             printf("\nrang = %d\n", i);
             connections[i] = connection;                   // --- Suppression de connexions[]
             pl[i].cnx = connection;                        // +++ Ajout de connection dans player
-            pl[i].point = 1;                               // +++ Initialisation des points
-            pl[i].ready = 0;                               // +++ Dire qu'il n'est pas pret encore
             pl[i].ocupation = 1;                           // +++ Dire qu'il est occuper
             return;
         }
@@ -158,8 +156,7 @@ void *threadProcess(void *ptr) {
 
     printf("Client 1 %d\n",pl[0].point);
     printf("Client 2 %d\n",pl[1].point);
-    printf("\n\n");
-    printf("Client 1 %d\n",pl[0].cnx->index);
+    printf("\n");
     if (test == 1)
         printf("Client 2 %d\n",pl[1].cnx->index);
     test = 1;
@@ -190,7 +187,7 @@ void *threadProcess(void *ptr) {
                     printf("index %d\n", room[0].pl1[0].cnx->index);
                     printf("index %d\n", room[0].pl1[1].cnx->index);
                     room[i].game_number = 2;
-                    game_start(i);
+                    game_start(i);                
                 }
             }
         }
