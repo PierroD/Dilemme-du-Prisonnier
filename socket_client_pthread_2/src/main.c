@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <stdbool.h>
+#include <time.h>
 
 #include "clientcxnmanager.h"
 
@@ -27,13 +28,13 @@
 GtkBuilder *builder = NULL;
 
 
-// void on_pressed(){
+void on_pressed(){
 
-// 	g_print("%s", "j'ai clicke");
+	g_print("%s", "j'ai clicke");
 	
-// 	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
-// 	gtk_progress_bar_set_fraction(progressBar, 0.90 );
-// } 
+	GtkProgressBar * progressBar = gtk_builder_get_object(builder, "progressBar");
+	gtk_progress_bar_set_fraction(progressBar, 0.90 );
+} 
 
 // void on_button_click() {
 //     printf("bouton 'Yes' clicked\n");
@@ -47,39 +48,47 @@ void on_click_C(GtkButton *button, GtkLabel *label) {
 
 	
 	gtk_label_set_text(label, "Collaborer");
-	valide_answer(1);
+	send_answer(1);
 	
 }
 
 void on_click_T(GtkButton *button, GtkLabel *label) {
 
 	gtk_label_set_text(label, "Trahir");
-	valide_answer(2);
+	send_answer(2);
 	
 }
 
-void valide_answer(GtkButton *Button, GtkLabel *label) {
-	gtk_label_set_text(label, "En attente de l'autre joueur ...");
+void delay(unsigned int msecs){
+    clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
+    while (goal > clock())
+        ;
+}
+
+void valide_answer(GtkButton *button, GtkLabel *label) {
+	gtk_label_set_text(label, "> En attente de l'autre joueur ... <");
 	
 }
 
-// void valide_answer(int answer) {
 
-// 	switch (answer)
-// 	{
-// 	case 1:
-// 		//Un jour peut etre
-// 		break;
-// 	case 2:
-// 		//Un jour peut etre
-// 		break;
+
+void send_answer(int answer) {
+
+	switch (answer)
+	{
+	case 1:
+		//Un jour peut etre
+		break;
+	case 2:
+		//Un jour peut etre
+		break;
 	
-// 	default: 
-// 		return -1;
-// 		break;
-// 	}
+	default: 
+		return -1;
+		break;
+	}
 	
-// }
+}
 
 void on_cancel() {
     GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
