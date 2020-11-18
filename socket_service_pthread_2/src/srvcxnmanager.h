@@ -24,6 +24,20 @@ typedef struct {
     int index;
 } connection_t;
 
+typedef struct {
+    int ocupation;
+    int point;
+    int ready;
+    connection_t* cnx;
+} Player_client;
+
+typedef struct {
+    char* name;
+    int game_number;
+    Player_client* pl1;
+    Player_client* pl2;
+} Room_of_palyer;
+
 
 void init_sockets_array();
 void add(connection_t *connection);
