@@ -27,7 +27,7 @@ typedef struct {
 } connection_t;
 
 typedef struct {
-    int ocupation;
+    int in_room;
     int point;
     int ready;
     connection_t* connection;
