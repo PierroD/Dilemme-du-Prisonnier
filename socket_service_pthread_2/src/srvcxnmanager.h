@@ -19,6 +19,11 @@
 #define true 1
 #define false 0
 
+enum ACTION{
+    CONNECT = 0,
+    READY = 1,
+};
+
 typedef struct {
     int sockfd;
     struct sockaddr address;
@@ -26,22 +31,17 @@ typedef struct {
     int index;
 } connection_t;
 
-typedef struct {
-    int in_room;
-    int point;
-    int ready;
-    connection_t* connection;
-} Player;
 
 typedef struct {
-    int id_room;
-    int nb_player;
-    Player *players;
-} Room;
+    int id_envoyer;
+    int id_destinataire;
+    enum ACTION action;
+    int size_data;
+    char data[32];
+} Packet;
 
 
 void init_sockets_array();
-Player create_player(connection_t *connection);
 void del(connection_t *connection);
 void *threadProcess(void *ptr);
 int create_server_socket() ;
