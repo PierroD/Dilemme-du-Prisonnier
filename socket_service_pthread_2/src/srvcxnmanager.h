@@ -16,6 +16,13 @@
 #define BUFFERSIZE 2048
 #define MAXSIMULTANEOUSCLIENTS 100
 
+#define true 1
+#define false 0
+
+enum ACTION{
+    CONNECT = 0,
+    READY = 1,
+};
 
 typedef struct {
     int sockfd;
@@ -24,23 +31,17 @@ typedef struct {
     int index;
 } connection_t;
 
-typedef struct {
-    int ocupation;
-    int point;
-    int ready;
-    connection_t* cnx;
-} Player_client;
 
 typedef struct {
-    char* name;
-    int game_number;
-    Player_client* pl1;
-    Player_client* pl2;
-} Room_of_palyer;
+    int id_envoyer;
+    int id_destinataire;
+    enum ACTION action;
+    int size_data;
+    char data[32];
+} Packet;
 
 
 void init_sockets_array();
-void add(connection_t *connection);
 void del(connection_t *connection);
 void *threadProcess(void *ptr);
 int create_server_socket() ;

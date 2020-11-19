@@ -1,21 +1,17 @@
-#ifndef CONFIGREADER_HEADER_FILE_H
-#define CONFIGREADER_HEADER_FILE_H
-typedef struct{
-    char *name;
-    char **clients_name;
-} Room;
+#ifndef CONFIGREADER_H
+#define CONFIGREADER_H
 
-typedef struct
-{
-    int *nb_room;
-    Room *rooms;
-} Game;
-
-typedef struct
-{
-    Game *game_config;
+typedef struct {
+    char *server_ip_address;
+    int server_port;
+    int max_simultaneous_connection;
 } Config;
 
 
-void *read_configuration(Config *configuration, char *filename);
-#endif
+Config parseConfig(char *filename);
+Config getConfig();
+char *getServerIpAddress();
+int getServerPort();
+int getMaxSimultaneousConnection();
+
+#endif /* CONFIGREADER_H */
