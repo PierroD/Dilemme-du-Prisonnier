@@ -20,10 +20,10 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include <time.h>
+#include <gtk/gtk.h>
 
 #include "clientcxnmanager.h"
 
-#include <gtk/gtk.h>
 
 GtkBuilder *builder = NULL;
 
@@ -35,7 +35,7 @@ typedef struct {
 
 answer test;
 
-void on_progress(GtkButton *button){
+void on_progress(GtkButton *button){ //bar de progression
 
 	g_print("%s", "je progresse");
 
@@ -64,6 +64,13 @@ void on_progress(GtkButton *button){
 
 }
 
+void delay(unsigned int msecs){
+    clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
+    while (goal > clock()){
+
+	};
+}
+
 // void on_button_click() {
 //     printf("bouton 'Yes' clicked\n");
 //     GtkEntry *texte = GTK_ENTRY(gtk_builder_get_object(builder, "texte"));
@@ -72,60 +79,48 @@ void on_progress(GtkButton *button){
 //     gtk_entry_set_text(echo, data);
 // }
 
-int on_click_C(GtkButton *button, GtkLabel *label) {
+int on_click_C(GtkButton *button, GtkLabel *label) { //bouton collaborer
 
 	gtk_label_set_text(label, "Collaborer");
 	
-	test.code = 1;
+	test.code = 0;
 	
 }
 
-int on_click_T(GtkButton *button, GtkLabel *label) {
+int on_click_T(GtkButton *button, GtkLabel *label) { //bouton trahir
 
 	gtk_label_set_text(label, "Trahir");
 	
-	test.code = 2;	
+	test.code = 1;	
 	
 }
 
-void delay(unsigned int msecs){
-    clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
-    while (goal > clock()){
 
-	};
-}
-
-void valide_answer(GtkButton *button, GtkLabel *label) {
+void valide_answer(GtkButton *button, GtkLabel *label) { //bouton envoyer
 	gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
 	
-	int answer = test.code;
+	char code[5];
+	switch (test.code)
+		{
+			case 0: //Collaborer
+				code[0] = "0";
+				sendMessageToServices(code);
+				break;
+			case 1: //Trahir
+				code[0] = "1";
+				sendMessageToServices(code);
+				break;
+	
+			default: 
+				printf("%s", "ErrorMessage \n");
+				gtk_main_quit();
+				break;
+	} 
 
-	send_answer(answer);
 }
 
-void send_answer(int answer) {
-	int code;
 
-	switch (answer)
-	{
-	case 1: //Collaborer
-		code = 0;
-		sendMessageToServices(code);
-		break;
-	case 2: //Trahir
-		code = 1;
-		sendMessageToServices(code);
-		break;
-	
-	default: 
-		printf("%s", "ErrorMessage \n");
-		gtk_main_quit();
-		break;
-	}
-	
-}
-
-void on_cancel() {
+void on_cancel() { // bouton exit
     GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
             GTK_MESSAGE_WARNING,
             GTK_BUTTONS_OK_CANCEL,
@@ -149,11 +144,12 @@ void on_window_main_destroy() {
     gtk_main_quit();
 }
 
-void sendMessageToServices(char sendCode){
+void sendMessageToServices(char sendCode[5]){
+
 	int sockfd;
-	pthread_t thread;
-	char msg[10];
-	msg[0] = sendCode;
+	char msg[5];
+	strcpy(msg, sendCode);
+	pthread_t thread;	
 
 	sockfd = open_connection();
 
@@ -173,6 +169,7 @@ void sendMessageToServices(char sendCode){
 	// } while (status != -1);
 }
 
+
 int main(int argc, char **argv) {
 
 	GtkWidget *win;
@@ -182,13 +179,10 @@ int main(int argc, char **argv) {
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_win"));
     gtk_builder_connect_signals(builder, NULL);
     gtk_widget_show(win);
+	//on_progress(); // --> Lancement au demarage du timer
     gtk_main();
     return (EXIT_SUCCESS);
 
 
-
-
-
-	return (EXIT_SUCCESS);
 }
 

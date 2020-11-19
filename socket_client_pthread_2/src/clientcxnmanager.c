@@ -50,7 +50,7 @@ int open_connection() {
 
     //Connect the socket to the server using the address
     if (connect(sockfd, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) != 0) {
-        printf("Fail to connect to server");
+        printf("Fail to connect to server \n");
         exit(-1);
     };
 
