@@ -49,7 +49,7 @@ int open_connection() {
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
     //Connect the socket to the server using the address
-    if (connect(sockfd, (struct sockaddr *) &serverAddr, sizeof (serverAddr)) != 0) {
+    if (connect(sockfd, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) != 0) {
         printf("Fail to connect to server");
         exit(-1);
     };

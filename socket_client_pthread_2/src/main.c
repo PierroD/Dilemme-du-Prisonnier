@@ -27,6 +27,13 @@
 
 GtkBuilder *builder = NULL;
 
+typedef struct {
+
+	int code;
+
+}answer;
+
+answer test;
 
 void on_progress(GtkButton *button){
 
@@ -57,8 +64,6 @@ void on_progress(GtkButton *button){
 
 }
 
- 
-
 // void on_button_click() {
 //     printf("bouton 'Yes' clicked\n");
 //     GtkEntry *texte = GTK_ENTRY(gtk_builder_get_object(builder, "texte"));
@@ -67,17 +72,19 @@ void on_progress(GtkButton *button){
 //     gtk_entry_set_text(echo, data);
 // }
 
-void on_click_C(GtkButton *button, GtkLabel *label) {
+int on_click_C(GtkButton *button, GtkLabel *label) {
 
 	gtk_label_set_text(label, "Collaborer");
-	send_answer(1);
+	
+	test.code = 1;
 	
 }
 
-void on_click_T(GtkButton *button, GtkLabel *label) {
+int on_click_T(GtkButton *button, GtkLabel *label) {
 
 	gtk_label_set_text(label, "Trahir");
-	send_answer(2);
+	
+	test.code = 2;	
 	
 }
 
@@ -91,21 +98,28 @@ void delay(unsigned int msecs){
 void valide_answer(GtkButton *button, GtkLabel *label) {
 	gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
 	
+	int answer = test.code;
+
+	send_answer(answer);
 }
 
 void send_answer(int answer) {
+	int code;
 
 	switch (answer)
 	{
-	case 1:
-		//Un jour peut etre
+	case 1: //Collaborer
+		code = 0;
+		sendMessageToServices(code);
 		break;
-	case 2:
-		//Un jour peut etre
+	case 2: //Trahir
+		code = 1;
+		sendMessageToServices(code);
 		break;
 	
 	default: 
-		return -1;
+		printf("%s", "ErrorMessage \n");
+		gtk_main_quit();
 		break;
 	}
 	
@@ -135,6 +149,30 @@ void on_window_main_destroy() {
     gtk_main_quit();
 }
 
+void sendMessageToServices(char sendCode){
+	int sockfd;
+	pthread_t thread;
+	char msg[10];
+	msg[0] = sendCode;
+
+	sockfd = open_connection();
+
+	//Creation d'un pthread de lecture
+	pthread_create(&thread, 0, threadProcess, &sockfd);
+	//write(connection->sock,"Main APP Still running",15);
+	pthread_detach(thread);
+
+	write(sockfd, msg, strlen(msg));
+
+
+	// do {
+	// 	fgets(msg, 100, stdin);
+	// 	//printf("sending : %s\n", msg);
+	// 	status = write(sockfd, msg, strlen(msg));
+	// 	//memset(msg,'\0',100);
+	// } while (status != -1);
+}
+
 int main(int argc, char **argv) {
 
 	GtkWidget *win;
@@ -149,27 +187,7 @@ int main(int argc, char **argv) {
 
 
 
-	int sockfd;
-	int status = 0;
-	char msg[100];
-	pthread_t thread;
 
-	sockfd = open_connection();
-
-	strcpy(msg, "Hello from Xeon"); //Xeon is the name of the this client
-	printf("sending : %s\n", msg);
-	write(sockfd, msg, strlen(msg));
-
-	//Creation d'un pthread de lecture
-	pthread_create(&thread, 0, threadProcess, &sockfd);
-	//write(connection->sock,"Main APP Still running",15);
-	pthread_detach(thread);
-	do {
-		fgets(msg, 100, stdin);
-		//printf("sending : %s\n", msg);
-		status = write(sockfd, msg, strlen(msg));
-		//memset(msg,'\0',100);
-	} while (status != -1);
 
 	return (EXIT_SUCCESS);
 }
