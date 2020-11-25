@@ -10,6 +10,8 @@
  *
  */
 
+
+
 #ifndef SRVCXNMANAGER_H
 #define SRVCXNMANAGER_H
 
@@ -19,10 +21,9 @@
 #define true 1
 #define false 0
 
-enum ACTION{
-    CONNECT = 0,
-    READY = 1,
-};
+
+
+
 
 typedef struct {
     int sockfd;
@@ -32,13 +33,7 @@ typedef struct {
 } connection_t;
 
 
-typedef struct {
-    int id_envoyer;
-    int id_destinataire;
-    enum ACTION action;
-    int size_data;
-    char data[32];
-} Packet;
+
 
 
 void init_sockets_array();

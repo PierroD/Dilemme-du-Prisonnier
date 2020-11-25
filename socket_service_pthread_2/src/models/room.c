@@ -1,10 +1,12 @@
 #include "room.h"
 
 Room *rooms = NULL;
+
 void init_rooms()
 {
-    rooms = (Room *)calloc(getMaxSimultaneousConnection() / 2, sizeof(Room));
-    rooms->players = (Player *)calloc(2, sizeof(Player));
+    rooms = (Room *)calloc(getMaxSimultaneousConnection() / getMaxPlayerPerRoom(), sizeof(Room));
+    for(int i=0; i<getMaxSimultaneousConnection() / getMaxPlayerPerRoom(); i++)
+        rooms[i].players = (Player *)calloc(getMaxPlayerPerRoom(), sizeof(Player));
 }
 
 Room *addPlayerToRoom(Room *current_room, int player_index, Player *add_player)
@@ -19,15 +21,15 @@ Room *configureRoom(Player *player)
 {
     if (rooms == NULL)
         init_rooms();
-    for (int i = 0; i < getMaxSimultaneousConnection() / 2; i++)
+    for (int i = 0; i < getMaxSimultaneousConnection() / getMaxPlayerPerRoom(); i++)
     {
         if (rooms[i].id_room == 0)
         {
             rooms[i].id_room = i + 1;
-            return addPlayerToRoom(&rooms[i], i, player);
+            return addPlayerToRoom(&rooms[i], 0, player);
         }
         else
-            for (int j = 1; j < 2; j++)
+            for (int j = 1; j < getMaxPlayerPerRoom(); j++)
                 if (rooms[i].players[j].in_room == false)
                     return addPlayerToRoom(&rooms[i], j, player);
     }
@@ -37,26 +39,14 @@ void setPlayerToReady(Room *current_room, Player *current_player)
 {
     for (int i = 0; i < current_room->nb_player; i++)
     {
-        Player tested_player = *(current_room->players + i * sizeof(Player));
-        if (tested_player.id == current_player->id)
+        Player player = *(current_room->players + i * sizeof(Player));
+        if (player.id == current_player->id)
         {
             current_room->players[i].ready = true;
             current_player->ready = true;
             break;
         }
     }
-}
-
-Player *getPlayerbyId(Room *current_room, int id)
-{
-    for (int i = 0; i < current_room->nb_player + 1; i++)
-    {
-        Player p2 = *(current_room->players + i * sizeof(Player));
-        if (p2.id == id)
-            return &current_room->players[i];
-    }
-    Player *p = (Player *)calloc(1, sizeof(Player));
-    return p;
 }
 
 int isRoomReady(Room *current_room)
@@ -67,12 +57,10 @@ int isRoomReady(Room *current_room)
         printf("p2 : %d \n", current_room->players[1].ready);
         printf("----------------------------------------------------------------\n");
     #endif*/
-
-    for (int i = 1; i < 3; i++)
+    for(int i =0; i< getMaxPlayerPerRoom(); i++)
     {
-        Player *p = getPlayerbyId(current_room, i);
-        if (p->ready != true)
-            return false;
+            if(current_room->players[i].ready==false)
+                return false; 
     }
     return true;
 }

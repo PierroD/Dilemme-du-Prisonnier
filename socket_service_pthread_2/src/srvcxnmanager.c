@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +6,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-
 #include "srvcxnmanager.h"
 #include "utils/configreader.h"
 #include "utils/bufferreader.h"
@@ -59,7 +57,8 @@ void *threadProcess(void *ptr)
 
     Player *current_player = create_player(connection);
     Room *current_room = configureRoom(current_player);
-
+    
+    PlayerIsConnected(current_player);
     // Ask if the player is ready
     sprintf(buffer_out, "Are you ready #%i ? \n", current_player->connection->index);
     write(current_player->connection->sockfd, buffer_out, strlen(buffer_out));
@@ -123,7 +122,7 @@ void *threadProcess(void *ptr)
 
 int create_server_socket()
 {
-    configfile = parseConfig("server.ini");
+    parseConfig("server.ini");
     int sockfd = -1;
     struct sockaddr_in address;
     sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -135,7 +134,6 @@ int create_server_socket()
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr(getServerIpAddress());
     address.sin_port = htons(getServerPort());
-
     int reuse = 1;
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
 

@@ -9,6 +9,21 @@
         "new": "c",
         "numeric": "c",
         "system_error": "c",
-        "thread": "c"
+        "thread": "c",
+        "any": "cpp",
+        "bit": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "condition_variable": "cpp",
+        "cstddef": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "optional": "cpp",
+        "future": "cpp",
+        "limits": "cpp",
+        "ranges": "cpp",
+        "functional": "cpp",
+        "regex": "cpp"
     }
 }

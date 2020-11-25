@@ -1,8 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <stdlib.h>
-#include <sys/socket.h>
 #include "../srvcxnmanager.h"
 
 #define true 1
