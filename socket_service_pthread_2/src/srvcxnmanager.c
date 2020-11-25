@@ -1,11 +1,8 @@
+#include <arpa/inet.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <pthread.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <arpa/inet.h>
 #include "srvcxnmanager.h"
 #include "utils/configreader.h"
 #include "utils/bufferreader.h"
@@ -57,7 +54,7 @@ void *threadProcess(void *ptr)
 
     Player *current_player = create_player(connection);
     Room *current_room = configureRoom(current_player);
-    
+
     PlayerIsConnected(current_player);
     // Ask if the player is ready
     sprintf(buffer_out, "Are you ready #%i ? \n", current_player->connection->index);

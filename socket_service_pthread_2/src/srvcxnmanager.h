@@ -18,11 +18,11 @@
 #define BUFFERSIZE 2048
 #define MAXSIMULTANEOUSCLIENTS 100
 
-#define true 1
-#define false 0
 
 
-
+#include <stdbool.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 
 typedef struct {
@@ -31,9 +31,6 @@ typedef struct {
     int addr_len;
     int index;
 } connection_t;
-
-
-
 
 
 void init_sockets_array();

@@ -4,21 +4,23 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include "../srvcxnmanager.h"
-#include "player.h"
 #include "../utils/bufferreader.h"
+#include "player.h"
 
-typedef enum ACTION{
+enum action{
     CONNECTED,
     PLAYER_READY,
     ROOM_READY
 };
 
-// typedef struct {
-//     int id_envoyer;
-//     int id_destinataire;
-//     enum ACTION action;
-//     int size_data;
-//     char data[32];
-// } Packet;
+
+typedef struct {
+    int id_envoyeur;
+    int id_receveur;
+    enum action code;
+    int size_data;
+    char data[];
+}Packet; 
+
 
 #endif /* RESPONSE_H */

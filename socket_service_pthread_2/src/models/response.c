@@ -1,5 +1,7 @@
 #include "response.h"
 
+
+
 void PlayerIsConnected(Player *current_player)
 {
     write_buffer_to_client(current_player, CONNECTED);

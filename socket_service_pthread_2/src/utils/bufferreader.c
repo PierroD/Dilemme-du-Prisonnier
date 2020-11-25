@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
 #include "bufferreader.h"
 
 
@@ -14,19 +11,19 @@ void read_buffer(Room *current_room, Player *current_player,char buffer_in[], in
     }
 }
 
-void write_buffer_to_room(Room *current_room, ACTION action)
+void write_buffer_to_room(Room *current_room, int code)
 {
     for(int i=0; i<current_room->nb_player; i++)
-           write_buffer_to_client((current_room->players + i * sizeof(Player)), action);
+           write_buffer_to_client((current_room->players + i * sizeof(Player)), code);
 }
 
-void write_buffer_to_client(Player *current_player, ACTION action)
+void write_buffer_to_client(Player *current_player, int code)
 {
-    write_buffer(current_player->connection->sockfd, action);
+    write_buffer(current_player->connection->sockfd, code);
 }
 
-void write_buffer(int playerSocket, ACTION action)
+void write_buffer(int playerSocket, int code)
 {
-    write(playerSocket, action, strlen(action));
+    write(playerSocket, code, sizeof(code));
 }
 
