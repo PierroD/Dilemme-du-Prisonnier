@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <sys/socket.h>
+
 #include "player.h"
 
 Player *create_player(connection_t *connection)

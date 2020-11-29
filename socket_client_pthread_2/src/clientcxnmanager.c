@@ -10,19 +10,23 @@
 
 
 #include "clientcxnmanager.h"
-#include "utils/ini.h"
+#include "utils/configreader.h"
+#include "utils/bufferreader.h"
+
 
 void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
     while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
+        
         if (strncmp(buffer_in, "exit", 4) == 0) {
             break;
         }
-
         printf("receive %d chars\n", len);
         printf("%.*s\n", len, buffer_in);
+        read_buffer(buffer_in, BUFFERSIZE);
+        write_buffer(sockfd, serializeMessage(PLAYER_READY, "I am ready"));
     }
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);
@@ -31,7 +35,7 @@ void *threadProcess(void * ptr) {
 int open_connection() {
     int sockfd;
 
-    ini_t *config = ini_load("config.ini");
+    parseConfig("client.ini");
     struct sockaddr_in serverAddr;
 
 
@@ -42,10 +46,10 @@ int open_connection() {
     // Address family is Internet 
     serverAddr.sin_family = AF_INET;
     //Set port number, using htons function 
-    serverAddr.sin_port = htons(atoi(ini_get(config, "Settings", "port")));
+    serverAddr.sin_port = htons(getServerPort());
     //Set IP address to localhost
-    serverAddr.sin_addr.s_addr = inet_addr(ini_get(config, "Settings", "server"));
-
+    serverAddr.sin_addr.s_addr = inet_addr(getServerIpAddress());
+   
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
     //Connect the socket to the server using the address

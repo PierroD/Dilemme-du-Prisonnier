@@ -1,13 +1,8 @@
-
+#include <arpa/inet.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <pthread.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-
 #include "srvcxnmanager.h"
 #include "utils/configreader.h"
 #include "utils/bufferreader.h"
@@ -60,56 +55,22 @@ void *threadProcess(void *ptr)
     Player *current_player = create_player(connection);
     Room *current_room = configureRoom(current_player);
 
-    // Ask if the player is ready
-    sprintf(buffer_out, "Are you ready #%i ? \n", current_player->connection->index);
-    write(current_player->connection->sockfd, buffer_out, strlen(buffer_out));
-
+    PlayerIsConnected(current_player);
+ 
     while ((len = read(current_player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0)
     {
-        
-        read_buffer(current_room,current_player, buffer_in, BUFFERSIZE);
-
-        if (strncmp(buffer_in, "bye", 3) == 0)
+         if (strncmp(buffer_in, "bye", 3) == 0)
         {
             break;
         }
-
-        /*#if DEBUG
-        printf("DEBUG-----------------------------------------------------------\n");
-        printf("len : %i\n", len);
-        printf("Buffer : %.*s\n", len, buffer_in);
-        printf("----------------------------------------------------------------\n");
-        #endif*/
-        // strcpy(buffer_out, "\nServer Echo : ");
-        // strncat(buffer_out, buffer_in, len);
-
-        // if (buffer_in[0] == '@')
-        // { // envoie à tous les joueurs de la salle
-        //     for (int i = 0; i < current_room->nb_player; i++)
-        //     {
-        //         if (current_room->players[i].connection != NULL)
-        //         {
-        //             write(current_room->players[i].connection->sockfd, buffer_out, strlen(buffer_out));
-        //         }
-        //     }
-        // }
-        // else if (buffer_in[0] == '#')
-        // { // envoie à un seul joueur
-        //     int client = 0;
-        //     int read = sscanf(buffer_in, "%*[^0123456789]%d ", &client);
-        //     for (int i = 0; i < current_room->nb_player; i++)
-        //     {
-        //         if (client == current_player->connection->index)
-        //         {
-        //             write(current_player->connection->sockfd, buffer_out, strlen(buffer_out));
-        //             break;
-        //         } //no client found ? : we dont care !!
-        //     }
-        // }
-        // else
-        // {
-        //     write(current_player->connection->sockfd, buffer_out, strlen(buffer_out));
-        // }
+        read_buffer(current_room,current_player, buffer_in, len);
+  
+        /*#if DEBUG*/
+        // printf("DEBUG-----------------------------------------------------------\n");
+        // printf("len : %i\n", len);
+        // printf("Buffer : %.*s\n", len, buffer_in);
+        // printf("----------------------------------------------------------------\n");
+       /* #endif*/
 
         //clear input buffer
         memset(buffer_in, '\0', BUFFERSIZE);
@@ -123,7 +84,7 @@ void *threadProcess(void *ptr)
 
 int create_server_socket()
 {
-    configfile = parseConfig("server.ini");
+    parseConfig("server.ini");
     int sockfd = -1;
     struct sockaddr_in address;
     sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -135,7 +96,6 @@ int create_server_socket()
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr(getServerIpAddress());
     address.sin_port = htons(getServerPort());
-
     int reuse = 1;
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
 

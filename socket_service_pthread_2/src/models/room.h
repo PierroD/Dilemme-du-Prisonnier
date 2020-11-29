@@ -14,9 +14,11 @@ typedef struct {
     int nb_player;
     Player *players;
 } Room;
+
 void init_rooms();
 Room *addPlayerToRoom(Room *current_room, int player_index, Player *add_player);
 Room *configureRoom(Player *player);
+void setPlayerToReady(Room *current_room, Player *current_player);
 int isRoomReady(Room *current_room);
 void printRoom(Room room);
 
