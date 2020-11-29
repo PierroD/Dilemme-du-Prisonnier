@@ -24,6 +24,8 @@
         "limits": "cpp",
         "ranges": "cpp",
         "functional": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "array": "c",
+        "string_view": "c"
     }
 }

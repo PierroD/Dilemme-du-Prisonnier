@@ -31,9 +31,7 @@ int main(int argc, char **argv) {
 	int status = 0;
 	char msg[100];
 	pthread_t thread;
-
 	sockfd = open_connection();
-
 	strcpy(msg, "Hello from Xeon"); //Xeon is the name of the this client
 	printf("sending : %s\n", msg);
 	write(sockfd, msg, strlen(msg));

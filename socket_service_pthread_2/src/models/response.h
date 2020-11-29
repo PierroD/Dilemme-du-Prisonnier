@@ -1,26 +1,18 @@
 #ifndef RESPONSE_H
 #define RESPONSE_H
-
 #include <stdlib.h>
 #include <sys/socket.h>
 #include "../srvcxnmanager.h"
+#include "../includes/packet.h"
+#include "../utils/serialize.h"
 #include "../utils/bufferreader.h"
+#include "room.h"
 #include "player.h"
 
-enum action{
-    CONNECTED,
-    PLAYER_READY,
-    ROOM_READY
-};
 
-
-typedef struct {
-    int id_envoyeur;
-    int id_receveur;
-    enum action code;
-    int size_data;
-    char data[];
-}Packet; 
+void PlayerIsConnected(Player *current_player);
+void PlayerIsReady(Player *current_player);
+void RoomIsReady(Room *current_room);
 
 
 #endif /* RESPONSE_H */
