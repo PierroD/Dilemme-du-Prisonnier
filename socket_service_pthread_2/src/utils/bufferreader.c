@@ -2,11 +2,8 @@
 
 void read_buffer(Room *current_room, Player *current_player, char buffer_in[], int buffer_size)
 {
-    if (buffer_size < sizeof(Packet))
-    {
-        Packet *packet = deserialize(buffer_in, buffer_size);
-        read_packet(packet, current_room, current_player);
-    }
+    Packet *packet = deserialize(buffer_in, buffer_size);
+    read_packet(packet, current_room, current_player);
 }
 
 void write_buffer_to_room(Room *current_room, Packet *packet)

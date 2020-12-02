@@ -4,18 +4,15 @@
 enum action{
     CONNECTED,
     PLAYER_READY,
-    ROOM_READY
+    ROOM_READY,
+    ASK_CHOICE, 
+    GAME_END
 };
 
 enum choice{
     SILENT,
     BETRAY
 };
-
-typedef struct {
-    char text[32];
-    enum choice code;
-}test;
 
 
 typedef struct {

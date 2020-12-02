@@ -16,6 +16,7 @@ enum choice{
 
 
 typedef struct{
+    int player_id;
     int punishement;
     int time_to_decide;
 }Dilemma;

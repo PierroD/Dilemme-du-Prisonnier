@@ -26,6 +26,7 @@ void *threadProcess(void * ptr) {
         printf("receive %d chars\n", len);
         printf("%.*s\n", len, buffer_in);
         read_buffer(buffer_in, BUFFERSIZE);
+         printf("player socket : %d\n", sockfd);
         write_buffer(sockfd, serializeMessage(PLAYER_READY, "I am ready"));
     }
     close(sockfd);
