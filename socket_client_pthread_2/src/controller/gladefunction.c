@@ -17,7 +17,8 @@ GtkBuilder *builder = NULL;
 typedef struct
 {
 
-	int code;
+	int codeChoix;
+	int codeMise;
 
 } answer;
 
@@ -82,43 +83,48 @@ int timer_handler()
 //     gtk_entry_set_text(echo, data);
 // }
 
-int on_click_1(GtkButton *button, GtkLabel *label)
+int on_click_1(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
 	gtk_label_set_text(label, "1 ans");
+	test.codeMise = 1;
 }
 
-int on_click_2(GtkButton *button, GtkLabel *label)
+int on_click_2(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
 	gtk_label_set_text(label, "2 ans");
+	test.codeMise = 2;
 }
 
-int on_click_5(GtkButton *button, GtkLabel *label)
+int on_click_5(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
 	gtk_label_set_text(label, "5 ans");
+	test.codeMise = 5;
 }
 
-int on_click_10(GtkButton *button, GtkLabel *label)
+int on_click_10(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
 	gtk_label_set_text(label, "10 ans");
+	test.codeMise = 10;
 }
 
-int on_click_50(GtkButton *button, GtkLabel *label)
+int on_click_50(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
 	gtk_label_set_text(label, "50 ans");
+	test.codeMise = 50;
 }
 
 int on_click_C(GtkButton *button, GtkLabel *label) //bouton collaborer
 { 
 
 	gtk_label_set_text(label, "Collaborer");
-	test.code = 0;
+	test.codeChoix = 0;
 }
 
 int on_click_T(GtkButton *button, GtkLabel *label) //bouton trahir
 { 
 
 	gtk_label_set_text(label, "Trahir");
-	test.code = 1;
+	test.codeChoix = 1;
 }
 
 void valide_answer(GtkButton *button, GtkLabel *label) //bouton envoyer
@@ -127,7 +133,7 @@ void valide_answer(GtkButton *button, GtkLabel *label) //bouton envoyer
 	gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
 
 	char code[5];
-	switch (test.code)
+	switch (test.codeChoix)
 	{
 	case 0: //Collaborer
 		code[0] = "0";
