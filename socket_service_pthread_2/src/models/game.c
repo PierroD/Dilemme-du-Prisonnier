@@ -1,6 +1,6 @@
 #include "game.h"
 
-init_game(Game *game, Player *players)
+void init_game(Game *game, Player *players)
 {
     game = (Game *)calloc(getMaxSimultaneousConnection() / getMaxPlayerPerRoom(), sizeof(Game));
     memcpy(game->players, players, sizeof(Player *));
@@ -11,13 +11,15 @@ init_game(Game *game, Player *players)
     game->rounds = calloc(game->nb_rounds, sizeof(Round));
 }
 
-start_game(Room *current_room)
+void start_game(Room *current_room)
 {
+    printf("partie lancée");
     Game *game = NULL;
     init_game(game, current_room->players);
-    pthread_t gameThread;
-    pthread_create(&gameThread, 0, gameThread, game);
-    phtread_detach(gameThread);
+    threadGame(game);
+    // pthread_t gameThread;
+    // pthread_create(&gameThread, 0, gameThread, game);
+    // phtread_detach(gameThread);
 }
 
 void send_dilemma_to_players(Game *current_game)
@@ -42,11 +44,11 @@ bool isChoicesDone(Round *current_round)
     return true;
 }
 
-void *threadGame(void *gamePointer)
+void threadGame(void *gamePointer)
 {
     Game *current_game;
     if (!gamePointer)
-        pthread_exist(0);
+      //  pthread_exist(0);
     current_game = (Game *)gamePointer;
 
     int round_counter = 0;
@@ -63,7 +65,8 @@ void *threadGame(void *gamePointer)
             if (isChoicesDone(current_round))
             {
                 round_counter++;
-                // send dilemma
+                // write result in a file
+                //...
                 send_dilemma_to_players(current_game);
 
             }

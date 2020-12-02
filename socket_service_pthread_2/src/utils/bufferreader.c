@@ -5,28 +5,7 @@ void read_buffer(Room *current_room, Player *current_player, char buffer_in[], i
     if (buffer_size < sizeof(Packet))
     {
         Packet *packet = deserialize(buffer_in, buffer_size);
-        switch (packet->code)
-        {
-        case PLAYER_READY:
-            setPlayerToReady(current_room, current_player);
-            PlayerIsReady(current_player);
-            if (isRoomReady(current_room))
-            {
-                RoomIsReady(current_room);
-                
-            }
-            break;
-        }
-    }
-    else
-    {
-        if (strncmp(buffer_in, "ready", 5) == 0)
-        {
-            setPlayerToReady(current_room, current_player);
-            PlayerIsReady(current_player);
-            if (isRoomReady(current_room))
-                RoomIsReady(current_room);
-        }
+        read_packet(packet, current_room, current_player);
     }
 }
 
@@ -43,6 +22,5 @@ void write_buffer_to_client(Player *current_player, Packet *packet)
 
 void write_buffer(int playerSocket, Packet *packet)
 {
-
-    write(playerSocket, packet, sizeof(packet));
+    write(playerSocket, packet, sizeof(Packet));
 }

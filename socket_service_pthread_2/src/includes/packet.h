@@ -5,9 +5,7 @@ enum action{
     CONNECTED,
     PLAYER_READY,
     ROOM_READY,
-    ASK_CHOICE,
-    SILENT,
-    BETRAY,  
+    ASK_CHOICE, 
     GAME_END
 };
 

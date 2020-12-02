@@ -7,7 +7,7 @@ void PlayerIsConnected(Player *current_player)
 
 void PlayerIsReady(Player *current_player)
 {
-        write_buffer_to_client(current_player, serializeMessage(PLAYER_READY, "You are ready"));
+    write_buffer_to_client(current_player, serializeMessage(PLAYER_READY, "You are ready"));
 }
 
 void RoomIsReady(Room *current_room)
