@@ -26,6 +26,7 @@
         "functional": "cpp",
         "regex": "cpp",
         "array": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "sstream": "c"
     }
 }

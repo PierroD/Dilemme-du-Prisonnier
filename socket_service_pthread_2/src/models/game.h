@@ -13,6 +13,7 @@
 typedef struct{
     int id_player;
     int choice; // init = -1; silent = 0; betray = 1;
+    int bet; // in years
     int time_to_decide;
 }Choice;
 
@@ -22,17 +23,20 @@ typedef struct {
 
 typedef struct {
     Player *players;
+    int id_game;
     int nb_rounds;
     int time_to_answer; // in seconds
     int punishement; // in years
     bool in_progress;
+    int round_counter;
     Round *rounds;
 }Game;
 
-void init_game(Game *game, Player *players);
+void init_game(Room *room);
 void start_game(Room *current_room);
 void send_dilemma_to_players(Game *current_game);
 bool isChoicesDone(Round *current_round);
-void threadGame(void *gamePointer);
-
+void init_round(Game *current_game, Room *current_room);
+void addChoiceToGame(Room *current_room, void *choice);
+void CheckNextRound(Game *current_game, Room *current_room);
 #endif /* GAME_H */

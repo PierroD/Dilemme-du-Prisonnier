@@ -10,9 +10,9 @@
 #include "player.h"
 
 
-void PlayerIsConnected(Player *current_player);
-void PlayerIsReady(Player *current_player);
-void RoomIsReady(Room *current_room);
+void reponse_PlayerIsConnected(Player *current_player);
+void response_PlayerIsReady(Player *current_player);
+void response_RoomIsReady(Room *current_room);
 
 
 #endif /* RESPONSE_H */
