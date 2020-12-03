@@ -13,6 +13,7 @@
 #include "gladefunction.h"
 
 GtkBuilder *builder = NULL;
+GtkBuilder *builderResults = NULL;
 
 typedef struct
 {
@@ -51,7 +52,7 @@ int timer_handler()
 // 		GtkProgressBar *progressBar = gtk_builder_get_object(builder, "progressBar");
 // 		gtk_progress_bar_set_fraction(progressBar, (double)i / timer); //valeurs entre 0 et 1 --- + cast
 
-// 		GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(builder, "time_display"));
+// 		GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(builder, "time_display"));		
 // 		snprintf(txt, 100, "%03i", abs(i - timer));
 // 		gtk_label_set_text(timelabel, txt);
 
@@ -115,22 +116,34 @@ int on_click_50(GtkButton *button, GtkLabel *label) //Choix de la mise
 
 int on_click_C(GtkButton *button, GtkLabel *label) //bouton collaborer
 { 
-
 	gtk_label_set_text(label, "Collaborer");
 	test.codeChoix = 0;
 }
 
 int on_click_T(GtkButton *button, GtkLabel *label) //bouton trahir
 { 
-
 	gtk_label_set_text(label, "Trahir");
 	test.codeChoix = 1;
 }
 
-void valide_answer(GtkButton *button, GtkLabel *label) //bouton envoyer
-{ 
+int refresh_button(GtkButton *button, GtkLabel *label)
+{
+	int serviceAnswer = NULL;
+	if(serviceAnswer != NULL)
+	{
 
-	gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
+	}else
+	{
+		gtk_label_set_text(label, "> ... En attente de l'autre joueur ... <");
+	}
+	
+}
+
+
+void valide_answer() //bouton envoyer
+{ 
+	on_window_main_destroy();
+	initwindowresults();
 
 	char code[5];
 	switch (test.codeChoix)
@@ -145,19 +158,18 @@ void valide_answer(GtkButton *button, GtkLabel *label) //bouton envoyer
 		break;
 
 	default:
-		printf("%s", "ErrorMessage \n");
+		printf("%s", "ErrorSendingMessage \n");
 		gtk_main_quit();
 		break;
 	}
 	g_source_remove(timer_id);
-	initwindowresults();
+	
 }
 
 void on_cancel() //boutton exit
 { 
 	GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, 
 	GTK_BUTTONS_OK_CANCEL, "This action will cause the universe to stop existing.");
-
 	unsigned int pressed = gtk_dialog_run(GTK_DIALOG(message_dialog));
 	if (pressed == GTK_RESPONSE_OK)
 	{
@@ -195,9 +207,9 @@ void initwindowresults() //newInterfaceResults.glade
 {
 	GtkWidget *win;
 	gtk_init(0, NULL);
-	builder = gtk_builder_new_from_file("src/view/newInterfaceResults.glade");
-	win = GTK_WIDGET(gtk_builder_get_object(builder, "app_win_rst"));
-	gtk_builder_connect_signals(builder, NULL);
+	builderResults = gtk_builder_new_from_file("src/view/newInterfaceResults.glade");
+	win = GTK_WIDGET(gtk_builder_get_object(builderResults, "app_win_rst"));
+	gtk_builder_connect_signals(builderResults, NULL);
 	gtk_widget_show(win);
 	gtk_main();
 }

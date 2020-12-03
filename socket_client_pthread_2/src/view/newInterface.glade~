@@ -217,7 +217,7 @@ Que voulez vous faire ?</property>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">mise :</property>
+                    <property name="label" translatable="yes">Mise :</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -254,6 +254,9 @@ Que voulez vous faire ?</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="max_width_chars">10</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans Bold 12"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -265,6 +268,9 @@ Que voulez vous faire ?</property>
                   <object class="GtkLabel" id="show_answer_C">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans Bold 12"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -343,7 +349,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="valide_answer" object="show_text" swapped="no"/>
+                <signal name="clicked" handler="valide_answer" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -217,7 +217,7 @@ Que voulez vous faire ?</property>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">mise :</property>
+                    <property name="label" translatable="yes">Mise :</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -344,12 +344,12 @@ Que voulez vous faire ?</property>
             <property name="border_width">10</property>
             <child>
               <object class="GtkButton" id="send_button">
-                <property name="label" translatable="yes">Envoyer</property>
+                <property name="label" translatable="yes">Validate</property>
                 <property name="width_request">75</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="valide_answer" object="show_text" swapped="no"/>
+                <signal name="clicked" handler="valide_answer" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
