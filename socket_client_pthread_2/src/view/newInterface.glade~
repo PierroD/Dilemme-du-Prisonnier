@@ -344,7 +344,7 @@ Que voulez vous faire ?</property>
             <property name="border_width">10</property>
             <child>
               <object class="GtkButton" id="send_button">
-                <property name="label" translatable="yes">Envoyer</property>
+                <property name="label" translatable="yes">Validate</property>
                 <property name="width_request">75</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

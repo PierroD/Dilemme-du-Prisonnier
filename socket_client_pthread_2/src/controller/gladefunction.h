@@ -14,13 +14,8 @@
 
 int timer_handler();
 int on_click_1(GtkButton *button, GtkLabel *label);
-int on_click_2(GtkButton *button, GtkLabel *label);
-int on_click_5(GtkButton *button, GtkLabel *label);
-int on_click_10(GtkButton *button, GtkLabel *label);
-int on_click_50(GtkButton *button, GtkLabel *label);
-//void on_progress();
-//void time_counter();
-//void delay(unsigned int msecs);
+int on_click_punishement(GtkButton *button, GtkLabel *label);
+
 int on_click_C(GtkButton *button, GtkLabel *label);
 int on_click_T(GtkButton *button, GtkLabel *label);
 void valide_answer();

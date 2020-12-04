@@ -15,14 +15,19 @@
 GtkBuilder *builder = NULL;
 GtkBuilder *builderResults = NULL;
 
+typedef enum {
+	SILENT,
+	BETRAY
+}Choice;
+
 typedef struct
 {
-
-	int codeChoix;
+	Choice codeChoix;
 	int codeMise;
 
 } answer;
 
+Choice choice;
 answer test;
 
 int timer_id = 0;
@@ -30,100 +35,47 @@ int elapsed_time = 30;
 
 int timer_handler()
 {
+	if(elapsed_time>0)
+	{
 	elapsed_time--;
 	char txt[100];
 	GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(builder, "time_display"));
+	GSList *builder_list = gtk_builder_get_objects(builder);
+	builder_list;
 	snprintf(txt, 100, "%04i", elapsed_time);
 	gtk_label_set_text(timelabel, txt);
 	return 1;
+	}
 }
 
-// void on_progress() //barre de progression
-// {
-
-// 	g_print("%s", "je progresse");
-
-// 	int timer = 300;
-// 	char txt[100];
-
-// 	for (int i = 0; i <= timer; i++)
-// 	{
-
-// 		GtkProgressBar *progressBar = gtk_builder_get_object(builder, "progressBar");
-// 		gtk_progress_bar_set_fraction(progressBar, (double)i / timer); //valeurs entre 0 et 1 --- + cast
-
-// 		GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(builder, "time_display"));		
-// 		snprintf(txt, 100, "%03i", abs(i - timer));
-// 		gtk_label_set_text(timelabel, txt);
-
-// 		while (gtk_events_pending())
-// 		{
-// 			gtk_main_iteration();
-// 		}
-
-// 		delay(100);
-// 	}
-
-// 	gtk_main_quit();
-// 	g_print("%s", "je ferme la fenetre");
-// }
-
-// void delay(unsigned int msecs)
-// {
-// 	clock_t goal = msecs * CLOCKS_PER_SEC / 1000 + clock();
-// 	while (goal > clock())
-// 	{
-// 	};
-// }
-
-// void on_button_click() {
-//     printf("bouton 'Yes' clicked\n");
-//     GtkEntry *texte = GTK_ENTRY(gtk_builder_get_object(builder, "texte"));
-//     gchar *data = (gchar *) gtk_entry_get_text(texte);
-//     GtkEntry *echo = GTK_ENTRY(gtk_builder_get_object(builder, "echo"));
-//     gtk_entry_set_text(echo, data);
-// }
 
 int on_click_1(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
-	gtk_label_set_text(label, "1 ans");
+	gtk_label_set_text(label, "1 an");
 	test.codeMise = 1;
 }
 
-int on_click_2(GtkButton *button, GtkLabel *label) //Choix de la mise
+int on_click_punishement(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
-	gtk_label_set_text(label, "2 ans");
-	test.codeMise = 2;
-}
-
-int on_click_5(GtkButton *button, GtkLabel *label) //Choix de la mise
-{
-	gtk_label_set_text(label, "5 ans");
-	test.codeMise = 5;
-}
-
-int on_click_10(GtkButton *button, GtkLabel *label) //Choix de la mise
-{
-	gtk_label_set_text(label, "10 ans");
-	test.codeMise = 10;
-}
-
-int on_click_50(GtkButton *button, GtkLabel *label) //Choix de la mise
-{
-	gtk_label_set_text(label, "50 ans");
-	test.codeMise = 50;
+	gtk_label_set_text(label, gtk_button_get_label(button));
+	char* text = gtk_button_get_label(button);
+	text[strlen(text)-4] = 0;
+	test.codeMise = atoi(text);
+	strncat(text, " ans", 4);
+	printf("valeur de la mise : %d \n",test.codeMise);
+	gtk_button_set_label(button, text);
 }
 
 int on_click_C(GtkButton *button, GtkLabel *label) //bouton collaborer
 { 
 	gtk_label_set_text(label, "Collaborer");
-	test.codeChoix = 0;
+	test.codeChoix = SILENT;
 }
 
 int on_click_T(GtkButton *button, GtkLabel *label) //bouton trahir
 { 
 	gtk_label_set_text(label, "Trahir");
-	test.codeChoix = 1;
+	test.codeChoix = BETRAY;
 }
 
 int refresh_button(GtkButton *button, GtkLabel *label)
@@ -143,12 +95,12 @@ int refresh_button(GtkButton *button, GtkLabel *label)
 void valide_answer() //bouton envoyer
 { 
 	on_window_main_destroy();
-	initwindowresults();
+	//initwindowresults();
 
 	char code[5];
 	switch (test.codeChoix)
 	{
-	case 0: //Collaborer
+	case SILENT: //Collaborer
 		code[0] = "0";
 		sendMessageToServices(code);
 		break;

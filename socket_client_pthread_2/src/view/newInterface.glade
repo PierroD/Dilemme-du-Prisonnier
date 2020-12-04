@@ -98,7 +98,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_2" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -112,7 +112,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_5" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -126,7 +126,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_10" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -140,7 +140,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_50" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
