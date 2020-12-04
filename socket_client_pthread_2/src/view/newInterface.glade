@@ -2,6 +2,16 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkImage" id="betray">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">assets/betray.png</property>
+  </object>
+  <object class="GtkImage" id="silent">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">assets/silence.png</property>
+  </object>
   <object class="GtkApplicationWindow" id="app_win">
     <property name="can_focus">False</property>
     <child>
@@ -84,11 +94,12 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_1" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_1y_click" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
+                <property name="padding">3</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -98,7 +109,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -112,11 +123,12 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
+                <property name="padding">3</property>
                 <property name="position">3</property>
               </packing>
             </child>
@@ -126,11 +138,12 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
+                <property name="padding">3</property>
                 <property name="position">4</property>
               </packing>
             </child>
@@ -140,11 +153,12 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_punishement" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
+                <property name="padding">3</property>
                 <property name="position">5</property>
               </packing>
             </child>
@@ -306,11 +320,14 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_C" object="show_answer_C" swapped="no"/>
+                <property name="image">silent</property>
+                <property name="image_position">top</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="btn_silent_click" object="show_answer_C" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
-                <property name="fill">True</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -321,11 +338,14 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_click_T" object="show_answer_C" swapped="no"/>
+                <property name="image">betray</property>
+                <property name="image_position">top</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="btn_betray_click" object="show_answer_C" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
-                <property name="fill">True</property>
+                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>

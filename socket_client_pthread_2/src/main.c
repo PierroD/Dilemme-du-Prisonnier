@@ -22,6 +22,7 @@
 #include <time.h>
 #include <gtk/gtk.h>
 
+#include "./controller/connectionWindowController.h"
 #include "./controller/gladefunction.h"
 #include "clientcxnmanager.h"
 
@@ -55,7 +56,7 @@ void sendMessageToServices(char sendCode[5])
 int main(int argc, char **argv)
 {
 
-	initwindow(argc, argv);
-
+	//initwindow(argc, argv);
+	initConnectionWindow(argc, argv);
 	return (EXIT_SUCCESS);
 }
