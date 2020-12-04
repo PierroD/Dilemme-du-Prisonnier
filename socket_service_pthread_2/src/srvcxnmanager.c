@@ -3,11 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "srvcxnmanager.h"
 #include "utils/configreader.h"
+#include "utils/fort.h"
 #include "utils/bufferreader.h"
+#include "utils/packetprocessor.h"
 #include "models/player.h"
 #include "models/room.h"
+#include "srvcxnmanager.h"
 
 connection_t *connections[MAXSIMULTANEOUSCLIENTS];
 Config configfile;
@@ -34,8 +36,6 @@ void del(connection_t *connection)
     exit(-5);
 }
 
-
-
 /**
  * Thread allowing server to handle multiple client connections
  * @param ptr connection_t 
@@ -50,30 +50,30 @@ void *threadProcess(void *ptr)
     if (!ptr)
         pthread_exit(0);
     connection = (connection_t *)ptr;
-    printf("New incoming connection \n");
 
     Player *current_player = create_player(connection);
+    printf("Player id : %d\n", current_player->id);
     Room *current_room = configureRoom(current_player);
 
-    PlayerIsConnected(current_player);
- 
+    reponse_PlayerIsConnected(current_player);
+
     while ((len = read(current_player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0)
     {
-         if (strncmp(buffer_in, "bye", 3) == 0)
+        if (strncmp(buffer_in, "bye", 3) == 0)
         {
             break;
         }
-        read_buffer(current_room,current_player, buffer_in, len);
-  
+        Packet *receive_packet = read_buffer(current_room, current_player, buffer_in, len);
+        //clear input buffer
+        memset(buffer_in, '\0', BUFFERSIZE);
+        process_packet(receive_packet, current_room, current_player);
+
         /*#if DEBUG*/
         // printf("DEBUG-----------------------------------------------------------\n");
         // printf("len : %i\n", len);
         // printf("Buffer : %.*s\n", len, buffer_in);
         // printf("----------------------------------------------------------------\n");
-       /* #endif*/
-
-        //clear input buffer
-        memset(buffer_in, '\0', BUFFERSIZE);
+        /* #endif*/
     }
     printf("Connection to client %i ended \n", current_player->connection->sockfd);
     close(current_player->connection->sockfd);
@@ -97,6 +97,18 @@ int create_server_socket()
     address.sin_addr.s_addr = inet_addr(getServerIpAddress());
     address.sin_port = htons(getServerPort());
     int reuse = 1;
+
+    // print Server info
+    char port[5];
+    sprintf(port, "%d", getServerPort());
+    ft_table_t *table = ft_create_table();
+    // /* Set "header" type for the first row */
+    ft_set_cell_prop(table, 0, FT_ANY_COLUMN, FT_CPROP_ROW_TYPE, FT_ROW_HEADER);
+    ft_write_ln(table, "Server", "IP Address", "Port");
+    ft_write_ln(table, "", getServerIpAddress(), port);
+    printf("%s\n", ft_to_string(table));
+    ft_destroy_table(table);
+
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
 
     if (bind(sockfd, (struct sockaddr *)&address, sizeof(struct sockaddr_in)) < 0)

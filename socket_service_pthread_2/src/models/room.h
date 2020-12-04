@@ -2,12 +2,11 @@
 #define ROOM_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <sys/socket.h>
 #include "../srvcxnmanager.h"
 #include "player.h"
 
-#define true 1
-#define false 0
 
 typedef struct {
     int id_room;

@@ -4,7 +4,10 @@
 enum action{
     CONNECTED,
     PLAYER_READY,
-    ROOM_READY
+    ROOM_READY,
+    ASK_CHOICE,
+    RESPONSE,
+    GAME_END
 };
 
 enum choice{
@@ -12,11 +15,17 @@ enum choice{
     BETRAY
 };
 
-typedef struct {
-    char text[32];
-    enum choice code;
-}test;
+typedef struct{
+    int player_id;
+    int bet;
+    enum choice choice;
+    int time_to_answer;
+}Answer;
 
+typedef struct{
+    int punishement;
+    int time_to_decide;
+}Dilemma;
 
 typedef struct {
     enum action code;

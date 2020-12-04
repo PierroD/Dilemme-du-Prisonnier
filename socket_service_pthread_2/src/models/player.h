@@ -1,16 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <stdbool.h>
 #include "../srvcxnmanager.h"
-
-#define true 1
-#define false 0
 
 typedef struct {
     int id;
-    int in_room;
+    bool in_room;
     int point;
-    int ready;
+    bool ready;
     connection_t* connection;
 } Player;
 

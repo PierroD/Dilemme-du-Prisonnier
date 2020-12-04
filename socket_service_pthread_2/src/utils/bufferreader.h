@@ -9,9 +9,9 @@
 #include "../models/player.h"
 #include "../models/room.h"
 #include "../srvcxnmanager.h"
+#include "packetprocessor.h"
 
-
-void read_buffer(Room *current_room,Player *current_player,char *buffer_in, int buffer_size);
+Packet *read_buffer(Room *current_room,Player *current_player,char *buffer_in, int buffer_size);
 void write_buffer_to_room(Room *current_room, Packet *packet);
 void write_buffer_to_client(Player *current_player, Packet *packet);
 void write_buffer(int playerSocket, Packet *packet);
