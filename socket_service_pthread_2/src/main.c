@@ -45,8 +45,6 @@ int main(int argc, char** argv) {
         return -5;
     }
 
-    printf("ready and listening\n");
-
     //Wait for connection
     while (true) {
         /* accept incoming connections */

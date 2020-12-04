@@ -10,11 +10,19 @@
  *
  */
 
+
+
 #ifndef SRVCXNMANAGER_H
 #define SRVCXNMANAGER_H
 
 #define BUFFERSIZE 2048
 #define MAXSIMULTANEOUSCLIENTS 100
+
+
+
+#include <stdbool.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 
 typedef struct {
@@ -26,7 +34,6 @@ typedef struct {
 
 
 void init_sockets_array();
-void add(connection_t *connection);
 void del(connection_t *connection);
 void *threadProcess(void *ptr);
 int create_server_socket() ;

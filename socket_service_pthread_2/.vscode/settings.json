@@ -1,0 +1,32 @@
+{
+    "files.associations": {
+        "algorithm": "c",
+        "*.tcc": "c",
+        "bitset": "c",
+        "execution": "c",
+        "fstream": "c",
+        "memory": "c",
+        "new": "c",
+        "numeric": "c",
+        "system_error": "c",
+        "thread": "c",
+        "any": "cpp",
+        "bit": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "condition_variable": "cpp",
+        "cstddef": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "optional": "cpp",
+        "future": "cpp",
+        "limits": "cpp",
+        "ranges": "cpp",
+        "functional": "cpp",
+        "regex": "cpp",
+        "array": "c",
+        "string_view": "c",
+        "sstream": "c"
+    }
+}

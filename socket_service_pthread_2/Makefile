@@ -1,12 +1,12 @@
 CC		:= gcc
-CFLAGS	:= -Wall -Wextra -g -std=c99
+CFLAGS	:= -Wall -Wextra -g -std=c99 
 
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include
 LIB		:= lib
 
-LIBRARIES	:= -lconfig -lpthread
+LIBRARIES	:= -lpthread
 DOXYGENCONF = Doxyfile
 ifeq ($(OS),Windows_NT)
 EXECUTABLE	:= main.exe
