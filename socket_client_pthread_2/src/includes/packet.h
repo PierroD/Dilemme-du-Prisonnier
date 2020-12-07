@@ -4,23 +4,22 @@
 enum action{
     CONNECTED,
     PLAYER_READY,
-    WAITING,
     ROOM_READY,
     ASK_CHOICE,
     RESPONSE,
     GAME_END
 };
 
-typedef enum {
+enum Decision{
 	SILENT,
 	BETRAY
-}Choice;
+};
 
 typedef struct{
     int player_id;
-    int bet;
-    Choice choice;
-    int time_to_answer;
+    int choice; // init = -1; silent = 0; betray = 1;
+    int bet; // in years
+    int time_to_decide;
 }Answer;
 
 typedef struct{

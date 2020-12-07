@@ -9,7 +9,7 @@ LIB		:= lib
 LIBRARIES	:= -lpthread
 DOXYGENCONF = Doxyfile
 ifeq ($(OS),Windows_NT)
-EXECUTABLE	:= main.exe
+EXECUTABLE	:= server.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)

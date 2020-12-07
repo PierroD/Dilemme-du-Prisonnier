@@ -12,10 +12,11 @@
     <property name="can_focus">False</property>
     <property name="pixbuf">assets/silence.png</property>
   </object>
-  <object class="GtkApplicationWindow" id="app_win">
+  <object class="GtkApplicationWindow" id="game_window">
     <property name="can_focus">False</property>
+    <property name="resizable">False</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="box_game">
         <property name="width_request">500</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -89,7 +90,7 @@ Que voulez vous faire ?</property>
               <placeholder/>
             </child>
             <child>
-              <object class="GtkButton" id="1_button">
+              <object class="GtkButton" id="btn_1">
                 <property name="label" translatable="yes">1 an</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -104,7 +105,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="2_button">
+              <object class="GtkButton" id="btn_2">
                 <property name="label" translatable="yes">2 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -118,7 +119,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="3_button">
+              <object class="GtkButton" id="btn_5">
                 <property name="label" translatable="yes">5 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -133,7 +134,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="10_button">
+              <object class="GtkButton" id="btn_10">
                 <property name="label" translatable="yes">10 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -145,21 +146,6 @@ Que voulez vous faire ?</property>
                 <property name="fill">True</property>
                 <property name="padding">3</property>
                 <property name="position">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="50_button">
-                <property name="label" translatable="yes">50 ans</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="padding">3</property>
-                <property name="position">5</property>
               </packing>
             </child>
             <child>
@@ -183,7 +169,18 @@ Que voulez vous faire ?</property>
             <property name="border_width">7</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="time_display">
+              <object class="GtkProgressBar" id="pbar_timeLeft">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_events">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">000</property>
@@ -205,18 +202,7 @@ Que voulez vous faire ?</property>
           </packing>
         </child>
         <child>
-          <object class="GtkAlignment">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">6</property>
-          </packing>
+          <placeholder/>
         </child>
         <child>
           <object class="GtkBox">
@@ -274,7 +260,7 @@ Que voulez vous faire ?</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
-                    <property name="fill">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -288,7 +274,7 @@ Que voulez vous faire ?</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
-                    <property name="fill">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -314,7 +300,7 @@ Que voulez vous faire ?</property>
             <property name="hexpand">False</property>
             <property name="border_width">10</property>
             <child>
-              <object class="GtkButton" id="collaborer_button">
+              <object class="GtkButton" id="btn_silent">
                 <property name="label" translatable="yes">Collaborer</property>
                 <property name="width_request">100</property>
                 <property name="visible">True</property>
@@ -323,7 +309,7 @@ Que voulez vous faire ?</property>
                 <property name="image">silent</property>
                 <property name="image_position">top</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_click_C" object="show_answer_C" swapped="no"/>
+                <signal name="clicked" handler="btn_silent_click" object="show_answer_C" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -332,7 +318,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="trahir_button">
+              <object class="GtkButton" id="btn_betray">
                 <property name="label" translatable="yes">Trahir</property>
                 <property name="width_request">100</property>
                 <property name="visible">True</property>
@@ -341,7 +327,7 @@ Que voulez vous faire ?</property>
                 <property name="image">betray</property>
                 <property name="image_position">top</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_click_T" object="show_answer_C" swapped="no"/>
+                <signal name="clicked" handler="btn_betray_click" object="show_answer_C" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -364,12 +350,12 @@ Que voulez vous faire ?</property>
             <property name="border_width">10</property>
             <child>
               <object class="GtkButton" id="send_button">
-                <property name="label" translatable="yes">Validate</property>
+                <property name="label" translatable="yes">Valider</property>
                 <property name="width_request">75</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="valide_answer" swapped="no"/>
+                <signal name="clicked" handler="btn_validate_click" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -379,13 +365,13 @@ Que voulez vous faire ?</property>
             </child>
             <child>
               <object class="GtkButton" id="exit_button">
-                <property name="label" translatable="yes">Exit</property>
+                <property name="label" translatable="yes">Fermer</property>
                 <property name="width_request">75</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image_position">right</property>
-                <signal name="clicked" handler="on_cancel" swapped="no"/>
+                <signal name="clicked" handler="btn_exit_click" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -404,7 +390,71 @@ Que voulez vous faire ?</property>
       </object>
     </child>
     <child type="titlebar">
-      <placeholder/>
+      <object class="GtkBox" id="box_connection">
+        <property name="width_request">500</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="lbl_connectionTitle">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Page de connexion</property>
+                <attributes>
+                  <attribute name="font-desc" value="Noto Sans Sinhala Semi-Bold 15"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_status">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Connexion en cours ...</property>
+                <attributes>
+                  <attribute name="font-desc" value="Noto Sans Sinhala Semi-Bold 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_ready">
+                <property name="label" translatable="yes">Je suis prêt</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="btn_ready_click" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
     </child>
   </object>
 </interface>

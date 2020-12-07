@@ -12,8 +12,8 @@ void init_rooms()
 Room *addPlayerToRoom(Room *current_room, int player_index, Player *add_player)
 {
     current_room->nb_player++;
+    add_player->in_room = true;
     memcpy((current_room->players + (player_index * sizeof(Player))), add_player, sizeof(Player));
-    current_room->players[player_index].in_room = true;
     return current_room;
 }
 

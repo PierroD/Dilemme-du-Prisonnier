@@ -8,17 +8,12 @@
 #include "../utils/bufferreader.h"
 #include "../utils/configreader.h"
 #include "../utils/serialize.h"
+#include "../includes/packet.h"
 
 
-typedef struct{
-    int id_player;
-    int choice; // init = -1; silent = 0; betray = 1;
-    int bet; // in years
-    int time_to_decide;
-}Choice;
 
 typedef struct {
-    Choice *choices;
+    Answer *answers;
 }Round;
 
 typedef struct {

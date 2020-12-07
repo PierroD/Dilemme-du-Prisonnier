@@ -8,26 +8,41 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
-
 #include "clientcxnmanager.h"
 #include "./utils/configreader.h"
 #include "./utils/bufferreader.h"
+#include "./utils/packetprocessor.h"
 
+void openThread()
+{
+    pthread_t thread;
+    pthread_create(&thread, 0, threadProcess, NULL);
+    pthread_detach(thread);
+}
 
-void *threadProcess(void * ptr) {
+void *threadProcess(void *ptr)
+{
     char buffer_in[BUFFERSIZE];
-    int sockfd = *((int *) ptr);
+    parseConfig("client.ini");
+    int sockfd = open_connection(); //*((int *)ptr);
+    while (sockfd == -1)
+    {
+        sleep(1);
+        sockfd = open_connection();
+    }
     int len;
     set_ServerScoket(sockfd);
-    while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
-        if (strncmp(buffer_in, "exit", 4) == 0) {
-            break;
+    while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0)
+    {
+        if (len != -1)
+        {
+            printf("receive %d chars\n", len);
+            printf("%.*s\n", len, buffer_in);
+            Packet *receive_packet = read_buffer(buffer_in, BUFFERSIZE);
+            memset(buffer_in, '\0', BUFFERSIZE);
+            process_packet(receive_packet);
         }
-
-        printf("receive %d chars\n", len);
-        printf("%.*s\n", len, buffer_in);
-        read_buffer(buffer_in, BUFFERSIZE);
-        }
+    }
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);
 }
@@ -36,7 +51,6 @@ int open_connection()
 {
     int sockfd;
 
-    parseConfig("client.ini");
     struct sockaddr_in serverAddr;
 
     // Create the socket.
@@ -55,8 +69,9 @@ int open_connection()
     //Connect the socket to the server using the address
     if (connect(sockfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) != 0)
     {
-        printf("Fail to connect to server");
-        exit(-1);
+        //printf("Fail to connect to server");
+        return -1;
+        //exit(-1);
     };
 
     return sockfd;

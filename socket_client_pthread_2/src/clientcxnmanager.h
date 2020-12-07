@@ -15,6 +15,7 @@
 
 #define BUFFERSIZE 2048
 
+void openThread();
 void *threadProcess(void * ptr);
 int open_connection();
 

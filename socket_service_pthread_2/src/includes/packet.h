@@ -10,16 +10,11 @@ enum action{
     GAME_END
 };
 
-enum choice{
-    SILENT,
-    BETRAY
-};
-
 typedef struct{
     int player_id;
-    int bet;
-    enum choice choice;
-    int time_to_answer;
+    int choice; // init = -1; silent = 0; betray = 1;
+    int bet; // in years
+    int time_to_decide;
 }Answer;
 
 typedef struct{

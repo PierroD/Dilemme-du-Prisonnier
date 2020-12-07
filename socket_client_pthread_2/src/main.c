@@ -22,41 +22,13 @@
 #include <time.h>
 #include <gtk/gtk.h>
 
-#include "./controller/connectionWindowController.h"
-#include "./controller/gladefunction.h"
+#include "./controller/gameWindowController.h"
 #include "clientcxnmanager.h"
 
 
-void sendMessageToServices(char sendCode[5])
-{
-
-	int sockfd;
-	char msg[5];
-	strcpy(msg, sendCode);
-	pthread_t thread;
-
-	sockfd = open_connection();
-
-	//Creation d'un pthread de lecture
-	pthread_create(&thread, 0, threadProcess, &sockfd);
-	//write(connection->sock,"Main APP Still running",15);
-	pthread_detach(thread);
-
-	write(sockfd, msg, strlen(msg));
-
-
-	// do {
-	// 	fgets(msg, 100, stdin);
-	// 	//printf("sending : %s\n", msg);
-	// 	status = write(sockfd, msg, strlen(msg));
-	// 	//memset(msg,'\0',100);
-	// } while (status != -1);
-}
 
 int main(int argc, char **argv)
 {
-
-	//initwindow(argc, argv);
-	initConnectionWindow(argc, argv);
+	initGameWindow();
 	return (EXIT_SUCCESS);
 }
