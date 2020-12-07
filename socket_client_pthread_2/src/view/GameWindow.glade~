@@ -90,7 +90,7 @@ Que voulez vous faire ?</property>
               <placeholder/>
             </child>
             <child>
-              <object class="GtkButton" id="1_button">
+              <object class="GtkButton" id="btn_1">
                 <property name="label" translatable="yes">1 an</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -105,7 +105,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="2_button">
+              <object class="GtkButton" id="btn_2">
                 <property name="label" translatable="yes">2 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -119,7 +119,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="3_button">
+              <object class="GtkButton" id="btn_5">
                 <property name="label" translatable="yes">5 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -134,7 +134,7 @@ Que voulez vous faire ?</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="10_button">
+              <object class="GtkButton" id="btn_10">
                 <property name="label" translatable="yes">10 ans</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

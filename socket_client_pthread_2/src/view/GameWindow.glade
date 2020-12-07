@@ -95,7 +95,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="btn_1y_click" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_1y_click" object="lbl_bet" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -110,7 +110,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="lbl_bet" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -124,7 +124,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="lbl_bet" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -139,7 +139,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="btn_punishement_click" object="show_answer_M" swapped="no"/>
+                <signal name="clicked" handler="btn_punishement_click" object="lbl_bet" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -250,7 +250,7 @@ Que voulez vous faire ?</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkLabel" id="show_answer_M">
+                  <object class="GtkLabel" id="lbl_bet">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="max_width_chars">10</property>
@@ -265,7 +265,7 @@ Que voulez vous faire ?</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="show_answer_C">
+                  <object class="GtkLabel" id="lbl_choice">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <attributes>
@@ -309,7 +309,7 @@ Que voulez vous faire ?</property>
                 <property name="image">silent</property>
                 <property name="image_position">top</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="btn_silent_click" object="show_answer_C" swapped="no"/>
+                <signal name="clicked" handler="btn_silent_click" object="lbl_choice" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -327,7 +327,7 @@ Que voulez vous faire ?</property>
                 <property name="image">betray</property>
                 <property name="image_position">top</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="btn_betray_click" object="show_answer_C" swapped="no"/>
+                <signal name="clicked" handler="btn_betray_click" object="lbl_choice" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>

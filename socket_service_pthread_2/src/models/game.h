@@ -33,5 +33,5 @@ void send_dilemma_to_players(Game *current_game);
 bool isChoicesDone(Round *current_round);
 void init_round(Game *current_game, Room *current_room);
 void addChoiceToGame(Room *current_room, void *choice);
-void CheckNextRound(Game *current_game, Room *current_room);
+void CheckNextRound(Game *current_game, Room *current_room, Round *current_round);
 #endif /* GAME_H */

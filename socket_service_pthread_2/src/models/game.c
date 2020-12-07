@@ -51,7 +51,7 @@ void init_round(Game *current_game, Room *current_room)
 {
     if (current_game->in_progress)
     {
-        if (current_game->nb_rounds - current_game->round_counter == -1)
+        if (current_game->nb_rounds - current_game->round_counter == 0)
         {
             current_game->in_progress = false;
             response_EndOfGame(current_room);
@@ -79,14 +79,14 @@ void addChoiceToGame(Room *current_room, void *choice)
 {
     Game *current_game = &games[current_room->id_room];
     Answer *current_choice = (Answer *)choice;
-    Answer *answers = (current_game->rounds + current_game->round_counter * sizeof(Answer))->answers;
-    memcpy((answers + (current_choice->player_id - 1) * sizeof(Answer)), current_choice, sizeof(Answer));
-    CheckNextRound(current_game, current_room);
+    Round *current_round = (current_game->rounds + current_game->round_counter * sizeof(Round));
+    //Answer *answers = current_round->answers;
+    memcpy((current_round->answers + (current_choice->player_id - 1) * sizeof(Answer)), current_choice, sizeof(Answer));
+    CheckNextRound(current_game, current_room, current_round);
 }
 
-void CheckNextRound(Game *current_game, Room *current_room)
+void CheckNextRound(Game *current_game, Room *current_room, Round *current_round)
 {
-    Round *current_round = &current_game->rounds[current_game->round_counter];
     if (isChoicesDone(current_round))
     {
         current_game->round_counter++;

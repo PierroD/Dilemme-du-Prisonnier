@@ -70,6 +70,14 @@ void setIsChoice(bool choiceState)
 	isChoice = choiceState;
 }
 
+void resetLabels()
+{
+	GtkLabel *lblBet = GTK_LABEL(gtk_builder_get_object(bld_GameWindow, "lbl_bet"));
+	GtkLabel *lblChoice = GTK_LABEL(gtk_builder_get_object(bld_GameWindow, "lbl_choice"));
+	gtk_label_set_text(lblBet, "");
+	gtk_label_set_text(lblChoice, "");
+}
+
 void newDilemma(int timeToDecide, int MaxPunishement)
 {
 	elapsed_time = timeToDecide;
@@ -90,6 +98,7 @@ void showOrHideChoices(bool showChoices)
 	{
 		setIsChoice(false);
 		setHasBet(false);
+		resetLabels();
 		gtk_widget_show(btnBetray);
 		gtk_widget_show(btnSilent);
 		gtk_widget_show(btn_1);
