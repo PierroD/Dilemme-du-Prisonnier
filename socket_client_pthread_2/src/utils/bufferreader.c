@@ -1,11 +1,11 @@
 #include "bufferreader.h"
+#include "serialize.h"
 
-int serverSocket=0;
+int serverSocket = 0;
 
 Packet *read_buffer(char buffer_in[], int buffer_size)
 {
     return deserialize(buffer_in, buffer_size);
-   // process_packet(packet);
 }
 
 void write_buffer(Packet *packet)

@@ -1,4 +1,5 @@
 #include "packetprocessor.h"
+#include "../controller/gameWindowController.h"
 
 void process_packet(Packet *packet)
 {
@@ -12,7 +13,7 @@ void process_packet(Packet *packet)
     }
     case PLAYER_READY:
     {
-         printf("PLAYER READY\n");
+        printf("PLAYER READY\n");
         setlblStatusText("En attente d'acceptation des autres joueurs");
         setButtonReadyVisible(false);
         break;
@@ -28,6 +29,12 @@ void process_packet(Packet *packet)
         printf("REVCEIVE DILEMMA\n");
         Dilemma *dilemma = (Dilemma *)packet->data;
         newDilemma(dilemma->time_to_decide, dilemma->punishement);
+        break;
+    }
+    case GAME_END:
+    {
+        printf("GAME END\n");
+        setLblEventsText("The game is over");
         break;
     }
     }

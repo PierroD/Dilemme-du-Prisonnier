@@ -1,4 +1,10 @@
+#include <stdlib.h>
+#include <sys/socket.h>
 #include "response.h"
+#include "../srvcxnmanager.h"
+#include "../includes/packet.h"
+#include "../utils/serialize.h"
+#include "../utils/bufferreader.h"
 
 void reponse_PlayerIsConnected(Player *current_player)
 {

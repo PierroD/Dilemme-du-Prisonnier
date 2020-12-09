@@ -1,4 +1,6 @@
 #include "packetprocessor.h"
+#include "../models/response.h"
+#include "../models/game.h"
 
 void process_packet(Packet *packet, Room *current_room, Player *current_player)
 {

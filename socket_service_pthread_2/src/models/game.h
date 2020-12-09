@@ -1,31 +1,26 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <stdbool.h>
-#include <pthread.h>
 #include "room.h"
 #include "player.h"
-#include "../utils/bufferreader.h"
-#include "../utils/configreader.h"
-#include "../utils/serialize.h"
 #include "../includes/packet.h"
 
-
-
-typedef struct {
+typedef struct
+{
     Answer *answers;
-}Round;
+} Round;
 
-typedef struct {
+typedef struct
+{
     Player *players;
     int id_game;
     int nb_rounds;
     int time_to_answer; // in seconds
-    int punishement; // in years
+    int punishement;    // in years
     bool in_progress;
     int round_counter;
     Round *rounds;
-}Game;
+} Game;
 
 void init_game(Room *room);
 void start_game(Room *current_room);

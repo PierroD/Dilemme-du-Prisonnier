@@ -1,4 +1,9 @@
+#include <stdbool.h>
+#include <pthread.h>
 #include "game.h"
+#include "../utils/bufferreader.h"
+#include "../utils/configreader.h"
+#include "../utils/serialize.h"
 
 Game *games = NULL;
 
@@ -9,7 +14,7 @@ void init_game(Room *room)
     Game *game = &games[room->id_room];
     game->players = room->players;
     game->id_game = room->id_room;
-    game->nb_rounds = rand() % 10;             // remplacer par un élément du .ini (aléatoire entre 1 - 10)
+    game->nb_rounds = rand() % 10; // remplacer par un élément du .ini (aléatoire entre 1 - 10)
     printf("nb rounds : %d\n", game->nb_rounds);
     game->time_to_answer = rand() % 31 + 30;   // remplacer par un élément du .ini (aléatoire entre 30 et 60)
     game->punishement = 100 / game->nb_rounds; // nb année = multiple de DIX (compris entre 10 et 100) / nb_round

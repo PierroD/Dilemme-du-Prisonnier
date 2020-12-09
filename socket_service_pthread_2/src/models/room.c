@@ -1,11 +1,14 @@
+#include <stdlib.h>
+#include <sys/socket.h>
 #include "room.h"
+#include "../srvcxnmanager.h"
 
 Room *rooms = NULL;
 
 void init_rooms()
 {
     rooms = (Room *)calloc(getMaxSimultaneousConnection() / getMaxPlayerPerRoom(), sizeof(Room));
-    for(int i=0; i<getMaxSimultaneousConnection() / getMaxPlayerPerRoom(); i++)
+    for (int i = 0; i < getMaxSimultaneousConnection() / getMaxPlayerPerRoom(); i++)
         rooms[i].players = (Player *)calloc(getMaxPlayerPerRoom(), sizeof(Player));
 }
 
@@ -49,26 +52,13 @@ void setPlayerToReady(Room *current_room, Player *current_player)
     }
 }
 
-int isRoomReady(Room *current_room)
+bool isRoomReady(Room *current_room)
 {
-    /*#if DEBUG
-        printf("DEBUG-----------------------------------------------------------\n");
-        printf("p1 : %d \n", current_room->players[0].ready);
-        printf("p2 : %d \n", current_room->players[1].ready);
-        printf("----------------------------------------------------------------\n");
-    #endif*/
-    for(int i =0; i< getMaxPlayerPerRoom(); i++)
+    for (int i = 0; i < getMaxPlayerPerRoom(); i++)
     {
-            if(current_room->players[i].ready==false)
-                return false; 
+        if (current_room->players[i].ready == false)
+            return false;
     }
     return true;
 }
 
-void printRoom(Room room)
-{
-    printf("Index de la room : %d\n", room.id_room);
-    printf("Nombre de joueurs : %d\n", room.nb_player);
-    for (int i = 0; i < room.nb_player; i++)
-        printf("index du joueur : %d\n", room.players[i].connection->index);
-}

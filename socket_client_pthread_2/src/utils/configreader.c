@@ -1,9 +1,7 @@
-#include "ini.h"
 #include "configreader.h"
-
+#include "ini.h"
 
 Config config;
-
 
 void parseConfig(char *filename)
 {
