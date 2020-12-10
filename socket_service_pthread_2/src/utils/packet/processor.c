@@ -2,6 +2,7 @@
 #include "../response/response.h"
 #include "../../controllers/game/gameController.h"
 #include "../../models/gameModel.h"
+#include "../config/parser.h"
 
 void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
 {
@@ -27,7 +28,7 @@ void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
         serialize_answer = packet->data;
         Answer *answer = (Answer *)serialize_answer;
         answer->player_id = current_player->id;
-        AddChoiceToGame(current_room, answer);
+        AddChoiceToGame(current_room, answer, current_player->id % getMaxPlayerPerRoom());
         break;
     }
     }

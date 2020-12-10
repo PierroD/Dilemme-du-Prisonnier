@@ -2,7 +2,7 @@
 #define GAMEMODEL_H
 
 #include "playerModel.h"
-#include "playerModel.h"
+#include "packetModel.h"
 
 typedef struct
 {
@@ -18,6 +18,7 @@ typedef struct
     int punishement;    // in years
     bool in_progress;
     int round_counter;
+    int game_created_at; // timestamp
     Round *rounds;
 } Game;
 

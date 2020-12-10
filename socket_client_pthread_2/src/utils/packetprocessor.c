@@ -28,7 +28,6 @@ void process_packet(Packet *packet)
     {
         printf("REVCEIVE DILEMMA\n");
         Dilemma *dilemma = (Dilemma *)packet->data;
-        sleep(1);
         newDilemma(dilemma->time_to_decide, dilemma->punishement);
         break;
     }

@@ -8,8 +8,9 @@ void ParseConfig(char *filename)
     ini_t *ini = ini_load(filename);
     config.server_ip_address = ini_get(ini, "network", "server_ip_address");
     config.server_port = atoi(ini_get(ini, "network", "server_port"));
-    config.max_simultaneous_connection = atoi(ini_get(ini, "network", "max_simultaneous_connection"));
-    config.max_player_per_room = atoi(ini_get(ini, "network", "max_player_per_room"));
+    config.max_simultaneous_connection = atoi(ini_get(ini, "parameters", "max_simultaneous_connection"));
+    config.max_player_per_room = atoi(ini_get(ini, "parameters", "max_player_per_room"));
+    config.export_folder_path = ini_get(ini, "export", "export_folder_path");
     return config;
 }
 
@@ -36,4 +37,9 @@ int getMaxSimultaneousConnection()
 int getMaxPlayerPerRoom()
 {
     return config.max_player_per_room;
+}
+
+char *getExportFolderPath()
+{
+    return config.export_folder_path;
 }
