@@ -1,31 +1,35 @@
 #ifndef PACKETMODEL_H
 #define PACKETMODEL_H
 
-enum action{
+enum action
+{
     CONNECTED,
     PLAYER_READY,
     ROOM_READY,
     ASK_CHOICE,
     RESPONSE,
-    GAME_END
+    GAME_END,
 };
 
-typedef struct{
+typedef struct
+{
     int player_id;
     int choice; // init = -1; silent = 0; betray = 1;
-    int bet; // in years
+    int bet;    // in years
     int time_to_decide;
-}Answer;
+} Answer;
 
-typedef struct{
+typedef struct
+{
     int punishement;
     int time_to_decide;
-}Dilemma;
+} Dilemma;
 
-typedef struct {
+typedef struct
+{
     enum action code;
     int size_data;
     char data[32];
-}Packet; 
+} Packet;
 
 #endif /* PACKETMODEL_H */

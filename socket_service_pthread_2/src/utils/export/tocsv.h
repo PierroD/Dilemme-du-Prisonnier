@@ -3,6 +3,6 @@
 
 #include "../../models/gameModel.h"
 
-ExportGameToCSV(Game *game);
+void ExportGameToCSV(Game *game);
 
 #endif /* TOCSV_H */

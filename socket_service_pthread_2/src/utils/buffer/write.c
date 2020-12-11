@@ -1,5 +1,5 @@
 #include "write.h"
-
+#include "../../views/packet/packetView.h"
 void BufferWriteToRoom(Room *current_room, Packet *packet)
 {
     for (int i = 0; i < current_room->nb_player; i++)
@@ -13,5 +13,6 @@ void BufferWriteToClient(Player *current_player, Packet *packet)
 
 void BufferWrite(int playerSocket, Packet *packet)
 {
+    view_writePacketInfo(packet, playerSocket, true);
     write(playerSocket, packet, sizeof(Packet));
 }

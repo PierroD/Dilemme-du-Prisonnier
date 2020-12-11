@@ -1,11 +1,13 @@
 #include "processor.h"
 #include "../response/response.h"
 #include "../../controllers/game/gameController.h"
+#include "../../views/packet/packetView.h"
 #include "../../models/gameModel.h"
 #include "../config/parser.h"
 
 void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
 {
+    view_writePacketInfo(packet, current_player->id, true);
     switch (packet->code)
     {
     case PLAYER_READY:
