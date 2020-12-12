@@ -8,9 +8,9 @@
 #include <arpa/inet.h>
 #include <time.h>
 #include "gameWindowController.h"
-#include "../includes/packet.h"
-#include "../utils/bufferreader.h"
-#include "../utils/response.h"
+#include "../includes/packetModel.h"
+#include "../utils/buffer/read.h"
+#include "../utils/response/response.h"
 #pragma endregion
 
 GtkBuilder *bld_GameWindow = NULL;
@@ -32,10 +32,27 @@ int progessbar_timer()
 		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(gtk_builder_get_object(bld_GameWindow, "pbar_timeLeft")), (gdouble)elapsed_time / pbar_max_value);
 		// set lblEvent text
 		char txt[100];
-		snprintf(txt, 100, "%02i", elapsed_time);
+		snprintf(txt, 100, "%02i s", elapsed_time);
 		setLblEventsText(txt);
 		return 1;
 	}
+	return 0;
+}
+
+int max_waiting_time;
+int waitingTimer(int waiting_time)
+{
+	max_waiting_time = waiting_time;
+	while (waiting_time > 0)
+	{
+		waiting_time--;
+		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(gtk_builder_get_object(bld_GameWindow, "pbar_timeLeft")), (gdouble)waiting_time / max_waiting_time);
+		char txt[100];
+		snprintf(txt, 100, "Le tour commence dans %01i s", waiting_time);
+		setLblEventsText(txt);
+		sleep(1);
+	}
+	return 1;
 }
 
 void setLblEventsText(char *text)
@@ -79,6 +96,7 @@ void resetLabels()
 
 void newDilemma(int timeToDecide, int MaxPunishement)
 {
+	waitingTimer(5);
 	elapsed_time = timeToDecide;
 	pbar_max_value = timeToDecide;
 	showOrHideChoices(true);
@@ -188,14 +206,14 @@ void btn_validate_click() //bouton envoyer
 void btn_exit_click() //boutton exit
 {
 	GtkWidget *message_dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
-													   GTK_BUTTONS_OK_CANCEL, "This action will cause the universe to stop existing.");
+													   GTK_BUTTONS_OK_CANCEL, "Voulez vous vraiment quitter ?");
 	unsigned int pressed = gtk_dialog_run(GTK_DIALOG(message_dialog));
 	if (pressed == GTK_RESPONSE_OK)
 	{
 		printf("OK Pressed \n");
 		printf("quitting\n ");
+		response_PlayerDisconnect();
 		gtk_widget_destroy(message_dialog);
-		//gtk_widget_destroy(parentWidgets);
 		gtk_main_quit();
 	}
 	else
@@ -207,7 +225,8 @@ void btn_exit_click() //boutton exit
 
 void on_window_main_destroy()
 {
-	printf("quitting\n ");
+	response_PlayerDisconnect();
+	sleep(2);
 	gtk_main_quit();
 }
 

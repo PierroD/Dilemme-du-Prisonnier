@@ -1,5 +1,5 @@
-#ifndef PACKETMODEL_H
-#define PACKETMODEL_H
+#ifndef PACKET_H
+#define PACKET_H
 
 enum action
 {
@@ -10,6 +10,12 @@ enum action
     RESPONSE,
     GAME_END,
     DISCONNECT,
+};
+
+enum Decision
+{
+    SILENT,
+    BETRAY
 };
 
 typedef struct
@@ -33,4 +39,4 @@ typedef struct
     char data[32];
 } Packet;
 
-#endif /* PACKETMODEL_H */
+#endif /* PACKET_H */

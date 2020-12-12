@@ -68,9 +68,7 @@ void *threadProcess(void *ptr)
         PacketProcessor(receive_packet, current_room, current_player);
     }
     printf("Connection to client %i ended \n", current_player->connection->sockfd);
-    close(current_player->connection->sockfd);
     // del(current_player->connection);
-    free(current_player->connection);
     pthread_exit(0);
 }
 

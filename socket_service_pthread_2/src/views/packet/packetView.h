@@ -11,6 +11,7 @@ static const char *action_str[] = {
     "ASK_CHOICE",
     "RESPONSE",
     "GAME_END",
+    "DISCONNECT",
 };
 
 void view_writePacketSentInfo(Packet *packet, int player_id);

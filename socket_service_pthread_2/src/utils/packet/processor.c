@@ -32,5 +32,10 @@ void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
         AddChoiceToGame(current_room, answer, current_player->id % getMaxPlayerPerRoom());
         break;
     }
+    case DISCONNECT:
+    {
+        close(current_player->connection->sockfd);
+        free(current_player->connection);
+    }
     }
 }
