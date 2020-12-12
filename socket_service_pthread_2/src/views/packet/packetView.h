@@ -13,5 +13,7 @@ static const char *action_str[] = {
     "GAME_END",
 };
 
-void view_writePacketInfo(Packet *packet, int player_id, bool show_offset);
+void view_writePacketSentInfo(Packet *packet, int player_id);
+void view_writePacketReceivedInfo(Packet *packet, int player_id);
+
 #endif /* PACKETVIEW_H */

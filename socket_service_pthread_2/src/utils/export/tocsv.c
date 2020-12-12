@@ -23,25 +23,22 @@ char *getFilePath(int game_id, int filename_without_extension)
 
 void ExportGameToCSV(Game *game)
 {
-    Game *save = (Game *)malloc(sizeof(Game));
-    memcpy(save, game, sizeof(Game));
-    FILE *file;
-    char *filepath = getFilePath(game->id_game, game->game_created_at);
-    char *content;
-    //     view_writeAllRoundInfo(game->rounds + 1 * sizeof(Round), 1, true);
-    //     file = fopen(filepath, "w+");
-    //     view_writeAllRoundInfo(game->rounds + 1 * sizeof(Round), 1, true);
-    //     fprintf(file, "Round N°, Player ID, Choice, Bet, Time to Decide"); // Table header
+    char content[FILENAME_MAX];
+    char temp_content[FILENAME_MAX];
     for (int i = 0; i < game->nb_rounds; i++)
     {
-        Round *current_round = save->rounds + i * sizeof(Round);
-        view_writeAllRoundInfo(current_round, i, true);
+        Round *current_round = game->rounds + i * sizeof(Round);
         for (int j = 0; j < getMaxPlayerPerRoom(); j++)
         {
             Answer *current_answer = current_round->answers + j * sizeof(Answer);
-            view_writeAnswerInfo(current_answer, true);
-            fprintf(file, "\n %d, %d, %s, %d, %d", i, current_answer->player_id, (current_answer->choice) ? "Betray" : "Silent", current_answer->bet, current_answer->time_to_decide);
+            sprintf(temp_content, "\n %d, %d, %s, %d, %d", i, current_answer->player_id, (current_answer->choice) ? "Betray" : "Silent", current_answer->bet, current_answer->time_to_decide);
+            strncat(content, temp_content, sizeof(temp_content));
         }
     }
+    FILE *file;
+    char *filepath = getFilePath(game->id_game, game->game_created_at);
+    file = fopen(filepath, "w+");
+    fprintf(file, "Round N°, Player ID, Choice, Bet, Time to Decide"); // Table header
+    fprintf(file, content);
     fclose(file);
 }

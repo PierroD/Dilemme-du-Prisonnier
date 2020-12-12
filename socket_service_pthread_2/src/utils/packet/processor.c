@@ -7,7 +7,6 @@
 
 void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
 {
-    view_writePacketInfo(packet, current_player->id, true);
     switch (packet->code)
     {
     case PLAYER_READY:

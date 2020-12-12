@@ -9,6 +9,8 @@
 #include "../packet/processor.h"
 #include "../../controllers/player/playerController.h"
 #include "../../controllers/room/roomController.h"
+#include "../../views/room/roomView.h"
+#include "../../views/packet/packetView.h"
 #include "manager.h"
 
 // connection_t *connections[MAXSIMULTANEOUSCLIENTS];
@@ -52,15 +54,16 @@ void *threadProcess(void *ptr)
     connection = (connection_t *)ptr;
 
     Player *current_player = PlayerCreate(connection);
-    printf("Player id : %d\n", current_player->id);
+    view_writePlayerInfo(current_player);
     Room *current_room = RoomAssignToPlayer(current_player);
-
+    view_writeRoomInfo(current_room);
     reponse_PlayerIsConnected(current_player);
 
     while ((len = read(current_player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0)
     {
         Packet *receive_packet = BufferRead(current_room, current_player, buffer_in, len);
         //clear input buffer
+        view_writePacketReceivedInfo(receive_packet, current_player->id);
         memset(buffer_in, '\0', BUFFERSIZE);
         PacketProcessor(receive_packet, current_room, current_player);
     }

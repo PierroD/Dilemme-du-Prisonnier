@@ -8,11 +8,11 @@ void BufferWriteToRoom(Room *current_room, Packet *packet)
 
 void BufferWriteToClient(Player *current_player, Packet *packet)
 {
+    view_writePacketSentInfo(packet, current_player->id);
     BufferWrite(current_player->connection->sockfd, packet);
 }
 
 void BufferWrite(int playerSocket, Packet *packet)
 {
-    view_writePacketInfo(packet, playerSocket, true);
     write(playerSocket, packet, sizeof(Packet));
 }

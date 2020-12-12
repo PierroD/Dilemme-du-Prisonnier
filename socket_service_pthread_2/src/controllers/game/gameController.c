@@ -17,19 +17,17 @@ void GameInitialize(Room *room)
     game->players = room->players;
     game->id_game = room->id_room;
     game->nb_rounds = 2; //rand() % 10; // remplacer par un élément du .ini (aléatoire entre 1 - 10)
-    printf("nb rounds : %d\n", game->nb_rounds);
     game->time_to_answer = rand() % 31 + 30;   // remplacer par un élément du .ini (aléatoire entre 30 et 60)
     game->punishement = 100 / game->nb_rounds; // nb année = multiple de DIX (compris entre 10 et 100) / nb_round
     game->in_progress = true;
     game->round_counter = 0;
     game->game_created_at = (int)time(NULL);
     game->rounds = (Round *)malloc(game->nb_rounds * sizeof(Round));
-    view_writeGameInfo(game, true);
+    view_writeGameInfo(game);
 }
 
 void GameStart(Room *current_room)
 {
-    printf("la partie commence\n");
     GameInitialize(current_room);
     RoundInitialize((games + current_room->id_room * sizeof(Game)), current_room);
 }
@@ -39,7 +37,7 @@ void SendDilemmaToPlayer(Game *current_game)
     Dilemma *dilemma = (Dilemma *)calloc(1, sizeof(Dilemma));
     dilemma->punishement = current_game->punishement;
     dilemma->time_to_decide = current_game->time_to_answer;
-    view_writeDilemmaInfo(dilemma, true);
+    view_writeDilemmaInfo(dilemma);
     for (int i = 0; i < getMaxPlayerPerRoom(); i++)
     {
         BufferWriteToClient((current_game->players + i * sizeof(Player)), SerializeData(ASK_CHOICE, dilemma, sizeof(dilemma)));
@@ -64,7 +62,6 @@ void RoundInitialize(Game *current_game, Room *current_room)
         if (current_game->nb_rounds - current_game->round_counter == 0)
         {
             current_game->in_progress = false;
-            // view_writeAllRoundInfo(current_game->rounds + 0 * sizeof(Round), 0, true);
             ExportGameToCSV(current_game);
             response_EndOfGame(current_room);
         }
@@ -73,7 +70,7 @@ void RoundInitialize(Game *current_game, Room *current_room)
             Round *current_round = current_game->rounds + current_game->round_counter * sizeof(Round);
             SendDilemmaToPlayer(current_game);
             current_round->answers = (Answer *)malloc(getMaxPlayerPerRoom() * sizeof(Answer));
-            view_writeRoundInfo(current_round, current_game->round_counter, true);
+            view_writeRoundInfo(current_round, current_game->round_counter);
             GameChoicesInitialize(current_round->answers);
         }
     }
@@ -93,7 +90,7 @@ void AddChoiceToGame(Room *current_room, Answer *player_answer, int answer_index
     Round *current_round = (current_game->rounds + current_game->round_counter * sizeof(Round));
     Answer *current_answer = (current_round->answers + answer_index * sizeof(Answer));
     memcpy(current_answer, player_answer, sizeof(Answer));
-    view_writeAnswerInfo(current_answer, true);
+    view_writeAnswerInfo(current_answer);
     CheckNextRound(current_game, current_room, current_round);
 }
 
