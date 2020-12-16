@@ -1,7 +1,20 @@
+/**
+ * \file		gameView.c
+ * \brief		Visualisation des reponses de la partie
+ * */
+
+
 #include "gameView.h"
 #include "../offset/offsetView.h"
 #include "../../utils/config/parser.h"
-// TODO if pour config debug
+
+/**
+ * Ecrit les informations de la partie
+ *
+ * @param game la partie
+ * 
+ * */
+
 void view_writeGameInfo(Game *game)
 {
     if (getShowGame())
@@ -10,6 +23,15 @@ void view_writeGameInfo(Game *game)
         writeOffset(game);
     }
 }
+
+/**
+ * Ecrit les informations du round
+ *
+ * @param round un round
+ * 
+ * @param round_nb numero de round
+ * 
+ * */
 
 void view_writeRoundInfo(Round *round, int round_nb)
 {
@@ -20,6 +42,13 @@ void view_writeRoundInfo(Round *round, int round_nb)
     }
 }
 
+/**
+ * Ecrit le dilemme envoyé aux joueurs
+ *
+ * @param dilemma dilemme
+ * 
+ * */
+
 void view_writeDilemmaInfo(Dilemma *dilemma)
 {
     if (getShowDilemma())
@@ -28,6 +57,13 @@ void view_writeDilemmaInfo(Dilemma *dilemma)
         writeOffset(dilemma);
     }
 }
+
+/**
+ * Ecrit les informations de la reponse des joueurs
+ *
+ * @param answer la reponse
+ * 
+ * */
 
 void view_writeAnswerInfo(Answer *answer)
 {

@@ -1,3 +1,9 @@
+/**
+ * \file        serialize.c
+ * \brief       ???
+ * */
+
+
 #include "serialize.h"
 
 Packet *Deserialize(char *buffer_in, int buffer_size)

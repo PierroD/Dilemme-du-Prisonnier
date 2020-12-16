@@ -1,5 +1,18 @@
+/**
+ * \file        offsetView.c
+ * \brief       Valeurs en memoires
+ * */
+
+
 #include "offsetView.h"
 #include "../../utils/config/parser.h"
+
+/**
+ * Affiche les cases memoires
+ *
+ * @param object poiteur vers les cases memoires
+ * 
+ * */
 
 void writeOffset(void *object)
 {

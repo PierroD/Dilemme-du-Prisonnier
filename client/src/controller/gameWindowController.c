@@ -1,3 +1,9 @@
+/**
+ * \file		gameWindowController.c
+ * \brief		???
+ * */
+
+
 #pragma region includes
 #include <stdio.h>
 #include <stdlib.h>

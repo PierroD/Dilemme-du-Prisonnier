@@ -1,7 +1,20 @@
+/**
+ * \file        roomView.c
+ * \brief       Visualisation de la salle d'attente
+ * */
+ 
+
 #include <arpa/inet.h>
 #include "roomView.h"
 #include "../../utils/connection/manager.h"
 #include "../../utils/config/parser.h"
+
+/**
+ * Ecrit les informations d'un joueur
+ *
+ * @param player joueur
+ * 
+ * */
 
 void view_writePlayerInfo(Player *player)
 {
@@ -11,6 +24,14 @@ void view_writePlayerInfo(Player *player)
         writeOffset(player);
     }
 }
+
+/**
+ * Ecrit les information de la salle d'attente
+ *
+ * @param room salle d'attente
+ * 
+ * */
+
 void view_writeRoomInfo(Room *room)
 {
     if (getShowRoom())

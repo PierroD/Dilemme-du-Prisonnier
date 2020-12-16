@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.c
- * Author: aurelio
- *
+/**
+ * \file		client.c(main)
+ * \author    	Pierre Hugo Harut Nassim
+ * \version   	1.0
+ * \date       	15 decembre 2020
+ * \brief		Gestion et envoi des donnees clients
  */
 
 #include <stdio.h>

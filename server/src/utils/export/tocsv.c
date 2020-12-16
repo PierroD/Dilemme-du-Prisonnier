@@ -1,3 +1,9 @@
+/**
+ * \file        tocsv.c
+ * \brief       Exportation vers fichier CSV
+ * */
+
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -6,6 +12,17 @@
 #include "../config/parser.h"
 #include "../../models/packetModel.h"
 #include "../../views/game/gameView.h"
+
+/**
+ * Retourne le chemin du fichier CSV
+ *
+ * @param game_id id de la partie
+ * 
+ * @param filename_without_extension nom du fichier
+ * 
+ * @return le chemin du fichier CSV
+ * 
+ * */
 
 char *getFilePath(int game_id, int filename_without_extension)
 {
@@ -21,6 +38,13 @@ char *getFilePath(int game_id, int filename_without_extension)
     return filepath;
 }
 
+/**
+ * Export vers le fichier CSV
+ *
+ * @param game la partie
+ * 
+ * */
+
 void ExportGameToCSV(Game *game)
 {
     char content[FILENAME_MAX];
@@ -35,6 +59,7 @@ void ExportGameToCSV(Game *game)
             strncat(content, temp_content, sizeof(temp_content));
         }
     }
+    
     FILE *file;
     char *filepath = getFilePath(game->id_game, game->game_created_at);
     file = fopen(filepath, "w+");

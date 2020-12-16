@@ -1,3 +1,12 @@
+/**
+ * \file		server.c(main)
+ * \author    	Pierre Hugo Harut Nassim
+ * \version   	1.0
+ * \date       	15 decembre 2020
+ * \brief		Lanceur du serveur
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +20,9 @@
 #include <stdbool.h>
 
 #include "utils/connection/manager.h"
+
+
+
 int main(int argc, char **argv)
 {
     int sockfd = -1;
@@ -18,8 +30,7 @@ int main(int argc, char **argv)
     connection_t *connection;
     pthread_t thread;
 
-    /* init array*/
-    // init_sockets_array();
+
     /* create socket */
     sockfd = create_server_socket();
 

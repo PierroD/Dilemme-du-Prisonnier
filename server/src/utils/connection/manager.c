@@ -1,3 +1,9 @@
+/**
+ * \file        manager.c
+ * \brief       Gestion threads et sockets
+ * */
+
+
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -13,36 +19,16 @@
 #include "../../views/packet/packetView.h"
 #include "manager.h"
 
-// connection_t *connections[MAXSIMULTANEOUSCLIENTS];
+
 Config configfile;
-
-// void init_sockets_array()
-// {
-//     for (int i = 0; i < getMaxSimultaneousConnection(); i++)
-//     {
-//         connections[i] = NULL;
-//     }
-// }
-
-// void del(connection_t *connection)
-// {
-//     for (int i = 0; i < getMaxSimultaneousConnection(); i++)
-//     {
-//         if (connections[i] == connection)
-//         {
-//             connections[i] = NULL;
-//             return;
-//         }
-//     }
-//     perror("Connection not in pool ");
-//     exit(-5);
-// }
 
 /**
  * Thread allowing server to handle multiple client connections
  * @param ptr connection_t 
- * @return 
+ *
+ * @return un pointeur
  */
+
 void *threadProcess(void *ptr)
 {
     char buffer_in[BUFFERSIZE];
@@ -71,6 +57,14 @@ void *threadProcess(void *ptr)
     // del(current_player->connection);
     pthread_exit(0);
 }
+
+
+/**
+ * Creation du socket du serveur
+ *
+ * @return le socket du serveur
+ * 
+ * */
 
 int create_server_socket()
 {

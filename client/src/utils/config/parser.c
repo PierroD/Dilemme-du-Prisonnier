@@ -1,3 +1,9 @@
+/**
+ * \file        parser.c
+ * \brief       ???
+ * */
+
+
 #include "parser.h"
 #include "ini.h"
 

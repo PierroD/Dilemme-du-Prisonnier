@@ -1,6 +1,21 @@
+/**
+ * \file        packetView.c
+ * \brief       Visualisation des packets
+ * */
+
+
 #include "packetView.h"
 #include "../offset/offsetView.h"
 #include "../../utils/config/parser.h"
+
+/**
+ * Ecrit les information du packet envoyé
+ *
+ * @param packet packet
+ * 
+ * @param player_id id du joueur
+ * 
+ * */
 
 void view_writePacketSentInfo(Packet *packet, int player_id)
 {
@@ -10,6 +25,15 @@ void view_writePacketSentInfo(Packet *packet, int player_id)
         writeOffset(packet);
     }
 }
+
+/**
+ * Ecrit les informations reçues
+ *
+ * @param player joueur
+ * 
+ * @param player_id id du joueur
+ * 
+ * */
 
 void view_writePacketReceivedInfo(Packet *packet, int player_id)
 {
