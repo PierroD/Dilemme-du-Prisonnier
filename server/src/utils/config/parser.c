@@ -41,6 +41,8 @@ void ParseConfig(char *filename)
     config.server_port = atoi(ini_get(ini, "network", "server_port"));
     config.max_simultaneous_connection = atoi(ini_get(ini, "parameters", "max_simultaneous_connection"));
     config.max_player_per_room = atoi(ini_get(ini, "parameters", "max_player_per_room"));
+    config.round_number = atoi(ini_get(ini, "parameters", "round_number"));
+    config.time_to_decide = atoi(ini_get(ini, "parameters", "time_to_decide"));
     config.export_folder_path = ini_get(ini, "export", "export_folder_path");
     config.show_packet = StringToBool(ini_get(ini, "debug", "show_packet"));
     config.show_player = StringToBool(ini_get(ini, "debug", "show_player"));
@@ -54,7 +56,7 @@ void ParseConfig(char *filename)
 }
 
 /**
- * retourne la configuration
+ * @return retourne la configuration
  * 
  * */
 
@@ -64,7 +66,7 @@ Config getConfig()
 }
 
 /**
- * retourne l'adresse ip du serveur
+ * @return retourne l'adresse ip du serveur
  * 
  * */
 
@@ -74,7 +76,7 @@ char *getServerIpAddress()
 }
 
 /**
- * retourne le port du serveur
+ * @return retourne le port du serveur
  * 
  * */
 
@@ -84,7 +86,7 @@ int getServerPort()
 }
 
 /**
- * retourne le nombre de connexion simultanées autorisés
+ * @return  retourne le nombre de connexion simultanées autorisés
  * 
  * */
 
@@ -94,7 +96,7 @@ int getMaxSimultaneousConnection()
 }
 
 /**
- * retourne le nombre de joueur maximum autorisé par salle d'attente
+ * @return  retourne le nombre de joueur maximum autorisé par salle d'attente
  *
  * */
 
@@ -104,7 +106,7 @@ int getMaxPlayerPerRoom()
 }
 
 /**
- * retourne le chemin du dossier dans lequel les resultats seront stockes
+ * @return  retourne le chemin du dossier dans lequel les resultats seront stockes
  * 
  * */
 
@@ -113,6 +115,23 @@ char *getExportFolderPath()
     return config.export_folder_path;
 }
 
+/**
+ * @return  Le nombre de round
+ * 
+ * */
+int getRoundNumber()
+{
+    return config.round_number;
+}
+
+/**
+ * @return  Le temps que le joueur a pour faire un choix
+ * 
+ * */
+int getTimeToDecide()
+{
+    return config.time_to_decide;
+}
 
 ///
 /// ... Pour le debuguage ...
@@ -120,7 +139,7 @@ char *getExportFolderPath()
 
 
 /**
- * Le serveur doit affiché les packets
+ * @return  Le serveur doit affiché les packets
  * 
  * */
 
@@ -130,7 +149,7 @@ bool getShowPacket()
 }
 
 /**
- * Le serveur doit affiché le joueur
+ * @return  Le serveur doit affiché le joueur
  * 
  * */
 
@@ -140,7 +159,7 @@ bool getShowPlayer()
 }
 
 /**
- * Le serveur doit affiché la salle d'attente
+ * @return  Le serveur doit affiché la salle d'attente
  * 
  * */
 
@@ -150,7 +169,7 @@ bool getShowRoom()
 }
 
 /**
- * Le serveur doit affiché la partie
+ * @return  Le serveur doit affiché la partie
  * 
  * */
 
@@ -160,7 +179,7 @@ bool getShowGame()
 }
 
 /**
- * Le serveur doit affiché le round
+ * @return  Le serveur doit affiché le round
  * 
  * */
 
@@ -170,7 +189,7 @@ bool getShowRound()
 }
 
 /**
- * Le serveur doit affiché le dilemme 
+ * @return  Le serveur doit affiché le dilemme 
  * 
  * */
 
@@ -180,7 +199,7 @@ bool getShowDilemma()
 }
 
 /**
- * Le serveur doit affiché la reponse
+ * @return  Le serveur doit affiché la reponse
  * 
  * */
 
@@ -190,7 +209,7 @@ bool getShowAnswer()
 }
 
 /**
- * Le serveur doit affiché les cellules memoires ou sont stockés les valeurs
+ * @return  Le serveur doit affiché les cellules memoires ou sont stockés les valeurs
  * 
  * */
 

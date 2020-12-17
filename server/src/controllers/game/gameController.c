@@ -3,7 +3,6 @@
  * \brief       Controleur de la partie
  * */
 
-
 #include <stdbool.h>
 #include <pthread.h>
 #include "gameController.h"
@@ -14,7 +13,6 @@
 #include "../../views/game/gameView.h"
 
 Game *games = NULL;
-
 
 /**
  * Initialisation de la partie
@@ -30,8 +28,8 @@ void GameInitialize(Room *room)
     Game *game = (games + room->id_room * sizeof(Game));
     game->players = room->players;
     game->id_game = room->id_room;
-    game->nb_rounds = rand() % 10; // remplacer par un élément du .ini (aléatoire entre 1 - 10)
-    game->time_to_answer = rand() % 11 + 20;   // remplacer par un élément du .ini (aléatoire entre 10 et 30)
+    game->nb_rounds = getRoundNumber();
+    game->time_to_answer = getTimeToDecide();
     game->punishement = 100 / game->nb_rounds; // nb année = 100 / nb_round
     game->in_progress = true;
     game->round_counter = 0;

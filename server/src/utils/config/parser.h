@@ -9,6 +9,8 @@ typedef struct
     int server_port;
     int max_simultaneous_connection;
     int max_player_per_room;
+    int round_number;
+    int time_to_decide;
     char *export_folder_path;
     bool show_packet;
     bool show_player;
@@ -26,6 +28,8 @@ char *getServerIpAddress();
 int getServerPort();
 int getMaxSimultaneousConnection();
 int getMaxPlayerPerRoom();
+int getRoundNumber();
+int getTimeToDecide();
 char *getExportFolderPath();
 bool getShowPacket();
 bool getShowPlayer();

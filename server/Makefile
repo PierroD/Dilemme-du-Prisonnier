@@ -9,12 +9,12 @@ LIB		:= lib
 LIBRARIES	:= -lpthread
 DOXYGENCONF = Doxyfile
 ifeq ($(OS),Windows_NT)
-EXECUTABLE	:= server.exe
+SERVER	:= server.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)
 else
-EXECUTABLE	:= server
+SERVER	:= server
 SOURCEDIRS	:= $(shell find $(SRC) -type d)
 INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
 LIBDIRS		:= $(shell find $(LIB) -type d)
@@ -26,19 +26,19 @@ CLIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
 SOURCES		:= $(wildcard $(patsubst %,%/*.c, $(SOURCEDIRS)))
 OBJECTS		:= $(SOURCES:.c=.o)
 
-all: $(BUILD)/$(EXECUTABLE)
+all: $(BUILD)/$(SERVER)
 
 .PHONY: clean
 clean:
-	-$(RM) $(BUILD)/$(EXECUTABLE)
+	-$(RM) $(BUILD)/$(SERVER)
 	-$(RM) $(OBJECTS)
 
 
 run: all
-	./$(BUILD)/$(EXECUTABLE)
+	./$(BUILD)/$(SERVER)
 
 documentation:
 	-doxygen $(DOXYGENCONF)
 
-$(BUILD)/$(EXECUTABLE): $(OBJECTS)
+$(BUILD)/$(SERVER): $(OBJECTS)
 	$(CC) $(CFLAGS) $(CINCLUDES) $(CLIBS) $^ -o $@ $(LIBRARIES)
