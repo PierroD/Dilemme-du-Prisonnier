@@ -1,6 +1,6 @@
 /**
  * \file		gameWindowController.c
- * \brief		???
+ * \brief		Controlleur de la fenetre de jeu
  * */
 
 
@@ -29,6 +29,13 @@ bool hasBet, isChoice;
 int timer_id = 0;
 int elapsed_time = 30;
 int pbar_max_value = 30;
+
+
+/**
+ * Bar de progression
+ * 
+ * */
+
 int progessbar_timer()
 {
 	if (elapsed_time > 0)
@@ -46,6 +53,12 @@ int progessbar_timer()
 }
 
 int max_waiting_time;
+
+/**
+ * Timer debut du round
+ * 
+ * */
+
 int waitingTimer(int waiting_time)
 {
 	max_waiting_time = waiting_time;
@@ -61,11 +74,21 @@ int waitingTimer(int waiting_time)
 	return 1;
 }
 
+/**
+ * Definit le text d'un label
+ * 
+ * */
+
 void setLblEventsText(char *text)
 {
 	GtkLabel *timelabel = GTK_LABEL(gtk_builder_get_object(bld_GameWindow, "lbl_events"));
 	gtk_label_set_text(timelabel, text);
 }
+
+/**
+ * Affiche/Cache le bouton "Ready"
+ * 
+ * */
 
 void setButtonReadyVisible(bool visibleState)
 {
@@ -76,21 +99,41 @@ void setButtonReadyVisible(bool visibleState)
 		gtk_widget_hide(btnReady);
 }
 
+/**
+ * Definit le text d'un label
+ * 
+ * */
+
 void setlblStatusText(char *text)
 {
 	GtkLabel *lblStatus = GTK_LABEL(gtk_builder_get_object(bld_GameWindow, "lbl_status"));
 	gtk_label_set_text(lblStatus, text);
 }
 
+/**
+ * Verifie si le joueur a parier
+ *  * 
+ * */
+
 void setHasBet(bool betState)
 {
 	hasBet = betState;
 }
 
+/**
+ * Verifie si le joueur a choisit
+ * 
+ * */
+
 void setIsChoice(bool choiceState)
 {
 	isChoice = choiceState;
 }
+
+/**
+ * Definit le text d'un label
+ * 
+ * */
 
 void resetLabels()
 {
@@ -100,6 +143,11 @@ void resetLabels()
 	gtk_label_set_text(lblChoice, "");
 }
 
+/**
+ * Action lorsque les joueur recoivent un dilemme
+ * 
+ * */
+
 void newDilemma(int timeToDecide, int MaxPunishement)
 {
 	waitingTimer(5);
@@ -108,6 +156,11 @@ void newDilemma(int timeToDecide, int MaxPunishement)
 	showOrHideChoices(true);
 	timer_id = g_timeout_add(1000, (GSourceFunc)progessbar_timer, NULL);
 }
+
+/**
+ * Affiche/Cache la fenetre de choix
+ * 
+ * */
 
 void showOrHideChoices(bool showChoices)
 {
@@ -142,6 +195,11 @@ void showOrHideChoices(bool showChoices)
 	}
 }
 
+/**
+ * Affiche la fenetre de jeu
+ * 
+ * */
+
 void showHideGameWindow(bool showState)
 {
 	GtkWidget *box_game = GTK_BOX(gtk_builder_get_object(bld_GameWindow, "box_game"));
@@ -161,10 +219,21 @@ void showHideGameWindow(bool showState)
 #pragma endregion
 
 #pragma region buttons click events
+
+/**
+ * Action lors du click
+ * 
+ * */
+
 void btn_ready_click(GtkButton *button, GtkLabel *label)
 {
 	response_PlayerIsReady();
 }
+
+/**
+ * Action lors du click
+ * 
+ * */
 
 int btn_1y_click(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
@@ -172,6 +241,11 @@ int btn_1y_click(GtkButton *button, GtkLabel *label) //Choix de la mise
 	setHasBet(true);
 	answer->bet = 1;
 }
+
+/**
+ * Action lors du click
+ * 
+ * */
 
 int btn_punishement_click(GtkButton *button, GtkLabel *label) //Choix de la mise
 {
@@ -184,6 +258,11 @@ int btn_punishement_click(GtkButton *button, GtkLabel *label) //Choix de la mise
 	gtk_button_set_label(button, text);
 }
 
+/**
+ * Action lors du click
+ * 
+ * */
+
 int btn_silent_click(GtkButton *button, GtkLabel *label) //bouton collaborer
 {
 	gtk_label_set_text(label, "Collaborer");
@@ -191,12 +270,22 @@ int btn_silent_click(GtkButton *button, GtkLabel *label) //bouton collaborer
 	answer->choice = SILENT;
 }
 
+/**
+ * Action lors du click
+ * 
+ * */
+
 int btn_betray_click(GtkButton *button, GtkLabel *label) //bouton trahir
 {
 	gtk_label_set_text(label, "Trahir");
 	setIsChoice(true);
 	answer->choice = BETRAY;
 }
+
+/**
+ * Action lors du click
+ * 
+ * */
 
 void btn_validate_click() //bouton envoyer
 {
@@ -208,6 +297,11 @@ void btn_validate_click() //bouton envoyer
 		showOrHideChoices(false);
 	}
 }
+
+/**
+ * Ferme la fenetre de jeu
+ * 
+ * */
 
 void btn_exit_click() //boutton exit
 {
@@ -239,6 +333,12 @@ void on_window_main_destroy()
 #pragma endregion
 
 #pragma region initialization window
+
+/**
+ * Initialisation de la fenetre de jeu
+ * 
+ * */
+
 void initGameWindow() //gameWindow.glade
 {
 	gtk_init(0, NULL);

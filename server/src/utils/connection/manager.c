@@ -43,7 +43,7 @@ void *threadProcess(void *ptr)
     view_writePlayerInfo(current_player);
     Room *current_room = RoomAssignToPlayer(current_player);
     view_writeRoomInfo(current_room);
-    reponse_PlayerIsConnected(current_player);
+    response_PlayerIsConnected(current_player);
 
     while ((len = read(current_player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0)
     {
