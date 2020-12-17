@@ -3,7 +3,6 @@
  * \brief		Controlleur de la fenetre de jeu
  * */
 
-
 #pragma region includes
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +15,7 @@
 #include "gameWindowController.h"
 #include "../includes/packetModel.h"
 #include "../utils/buffer/read.h"
+#include "../utils/config/parser.h"
 #include "../utils/response/response.h"
 #pragma endregion
 
@@ -29,7 +29,6 @@ bool hasBet, isChoice;
 int timer_id = 0;
 int elapsed_time = 30;
 int pbar_max_value = 30;
-
 
 /**
  * Bar de progression
@@ -342,7 +341,9 @@ void on_window_main_destroy()
 void initGameWindow() //gameWindow.glade
 {
 	gtk_init(0, NULL);
-	bld_GameWindow = gtk_builder_new_from_file("src/view/GameWindow.glade");
+	openThread();
+	parseConfig("client.ini");
+	bld_GameWindow = gtk_builder_new_from_file(getViewFilePath());
 	gameWidgets = GTK_WIDGET(gtk_builder_get_object(bld_GameWindow, "game_window"));
 	gtk_builder_connect_signals(bld_GameWindow, NULL);
 	answer = (Answer *)malloc(sizeof(Answer));
@@ -351,7 +352,6 @@ void initGameWindow() //gameWindow.glade
 				 NULL);
 	gtk_widget_show_all(gameWidgets);
 	showHideGameWindow(false);
-	openThread();
 	gtk_main();
 }
 #pragma endregion

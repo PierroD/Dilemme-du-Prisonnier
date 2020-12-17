@@ -14,7 +14,7 @@ void parseConfig(char *filename)
     ini_t *ini = ini_load(filename);
     config.server_ip_address = ini_get(ini, "network", "server_ip_address");
     config.server_port = atoi(ini_get(ini, "network", "server_port"));
-    return config;
+    config.view_file_path = ini_get(ini, "view", "file_path");
 }
 
 Config getConfig()
@@ -30,4 +30,9 @@ char *getServerIpAddress()
 int getServerPort()
 {
     return config.server_port;
+}
+
+char *getViewFilePath()
+{
+    return config.view_file_path;
 }

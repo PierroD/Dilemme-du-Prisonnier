@@ -1,5 +1,5 @@
 #
-# 'make'        build executable file 'main'
+# 'make'        build executable file 'CLIENT'
 # 'make clean'  removes all .o and executable files
 #
 
@@ -15,8 +15,8 @@ CFLAGS	:= -Wall -Wextra -g -rdynamic -DDEBUGS
 #   their path using -Lpath, something like:
 LFLAGS = -lpthread
 
-# define output directory
-OUTPUT	:= output
+# define BUILD directory
+BUILD	:= build
 
 # define source directory
 SRC		:= src
@@ -28,7 +28,7 @@ INCLUDE	:= include
 LIB		:= lib
 
 ifeq ($(OS),Windows_NT)
-MAIN	:= main.exe
+CLIENT	:= client.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)
@@ -36,7 +36,7 @@ FIXPATH = $(subst /,\,$1)
 RM			:= del /q /f
 MD	:= mkdir
 else
-MAIN	:= main
+CLIENT	:= client
 SOURCEDIRS	:= $(shell find $(SRC) -type d)
 INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
 LIBDIRS		:= $(shell find $(LIB) -type d)
@@ -63,16 +63,16 @@ OBJECTS		:= $(SOURCES:.c=.o)
 # deleting dependencies appended to the file from 'make depend'
 #
 
-OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
+BUILDCLIENT	:= $(call FIXPATH,$(BUILD)/$(CLIENT))
 
-all: $(OUTPUT) $(MAIN)
+all: $(BUILD) $(CLIENT)
 	@echo Executing 'all' complete!
 
-$(OUTPUT):
-	$(MD) $(OUTPUT)
+$(BUILD):
+	$(MD) $(BUILD)
 
-$(MAIN): $(OBJECTS) 
-	$(CC) $(CFLAGS) $(GTK1) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS) $(GTK2)
+$(CLIENT): $(OBJECTS) 
+	$(CC) $(CFLAGS) $(GTK1) $(INCLUDES) -o $(BUILDCLIENT) $(OBJECTS) $(LFLAGS) $(LIBS) $(GTK2)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
@@ -83,10 +83,10 @@ $(MAIN): $(OBJECTS)
 
 .PHONY: clean
 clean:
-	$(RM) $(OUTPUTMAIN)
+	$(RM) $(BUILDCLIENT)
 	$(RM) $(call FIXPATH,$(OBJECTS))
 	@echo Cleanup complete!
 
 run: all
-	./$(OUTPUTMAIN)
+	./$(BUILDCLIENT)
 	@echo Executing 'run: all' complete!

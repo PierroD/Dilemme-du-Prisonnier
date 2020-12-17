@@ -3,7 +3,6 @@
  * \brief       Gestion threads et sockets
  * */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,7 +29,6 @@ void openThread()
 void *threadProcess(void *ptr)
 {
     char buffer_in[BUFFERSIZE];
-    parseConfig("client.ini");
     int sockfd = open_connection(); //*((int *)ptr);
     while (sockfd == -1)
     {
@@ -57,7 +55,7 @@ void *threadProcess(void *ptr)
 int open_connection()
 {
     int sockfd;
-
+    parseConfig("client.ini");
     struct sockaddr_in serverAddr;
 
     // Create the socket.
