@@ -1,9 +1,26 @@
+/**
+ * \file        processor.c
+ * \brief       Traitement du packet recu (packetModel.h)
+ * */
+
+
 #include "processor.h"
 #include "../response/response.h"
 #include "../../controllers/game/gameController.h"
 #include "../../views/packet/packetView.h"
 #include "../../models/gameModel.h"
 #include "../config/parser.h"
+
+/**
+ * Determine l'action du serveur en fonction du packet recu
+ *
+ * @param packet packet recu
+ * 
+ * @param current_room salle d'attente
+ * 
+ * @param current_player joueur courant
+ * 
+ * */
 
 void PacketProcessor(Packet *packet, Room *current_room, Player *current_player)
 {

@@ -1,3 +1,9 @@
+/**
+ * \file        manager.c
+ * \brief       Gestion threads et sockets
+ * */
+
+
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -13,36 +19,16 @@
 #include "../../views/packet/packetView.h"
 #include "manager.h"
 
-// connection_t *connections[MAXSIMULTANEOUSCLIENTS];
+
 Config configfile;
-
-// void init_sockets_array()
-// {
-//     for (int i = 0; i < getMaxSimultaneousConnection(); i++)
-//     {
-//         connections[i] = NULL;
-//     }
-// }
-
-// void del(connection_t *connection)
-// {
-//     for (int i = 0; i < getMaxSimultaneousConnection(); i++)
-//     {
-//         if (connections[i] == connection)
-//         {
-//             connections[i] = NULL;
-//             return;
-//         }
-//     }
-//     perror("Connection not in pool ");
-//     exit(-5);
-// }
 
 /**
  * Thread allowing server to handle multiple client connections
  * @param ptr connection_t 
- * @return 
+ *
+ * @return un pointeur
  */
+
 void *threadProcess(void *ptr)
 {
     char buffer_in[BUFFERSIZE];
@@ -57,7 +43,7 @@ void *threadProcess(void *ptr)
     view_writePlayerInfo(current_player);
     Room *current_room = RoomAssignToPlayer(current_player);
     view_writeRoomInfo(current_room);
-    reponse_PlayerIsConnected(current_player);
+    response_PlayerIsConnected(current_player);
 
     while ((len = read(current_player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0)
     {
@@ -71,6 +57,14 @@ void *threadProcess(void *ptr)
     // del(current_player->connection);
     pthread_exit(0);
 }
+
+
+/**
+ * Creation du socket du serveur
+ *
+ * @return le socket du serveur
+ * 
+ * */
 
 int create_server_socket()
 {

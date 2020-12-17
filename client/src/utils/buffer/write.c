@@ -1,3 +1,9 @@
+/**
+ * \file        write.c
+ * \brief       Envoi donnees au serveur
+ * */
+
+
 #include "write.h"
 
 int serverSocket = 0;

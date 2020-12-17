@@ -1,3 +1,9 @@
+/**
+ * \file        manager.c
+ * \brief       Gestion threads et sockets
+ * */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

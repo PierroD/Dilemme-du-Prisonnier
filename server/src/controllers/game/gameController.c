@@ -1,3 +1,9 @@
+/**
+ * \file        gameController.c
+ * \brief       Controleur de la partie
+ * */
+
+
 #include <stdbool.h>
 #include <pthread.h>
 #include "gameController.h"
@@ -8,6 +14,14 @@
 #include "../../views/game/gameView.h"
 
 Game *games = NULL;
+
+
+/**
+ * Initialisation de la partie
+ *
+ * @param room Salle d'attente
+ * 
+ * */
 
 void GameInitialize(Room *room)
 {
@@ -26,11 +40,25 @@ void GameInitialize(Room *room)
     view_writeGameInfo(game);
 }
 
+/**
+ * Lance la partie
+ *
+ * @param current_room salle d'attente 
+ * 
+ * */
+
 void GameStart(Room *current_room)
 {
     GameInitialize(current_room);
     RoundInitialize((games + current_room->id_room * sizeof(Game)), current_room);
 }
+
+/**
+ * Envoi du dilemme aux joueurs
+ *
+ * @param current_game partie en cours
+ * 
+ * */
 
 void SendDilemmaToPlayer(Game *current_game)
 {
@@ -44,6 +72,15 @@ void SendDilemmaToPlayer(Game *current_game)
     }
 }
 
+/**
+ * Comfirmation des choix des joueurs de la partie
+ *
+ * @param current_round round en cours
+ * 
+ * @return boolean
+ * 
+ * */
+
 bool isChoicesDone(Round *current_round)
 {
     for (int i = 0; i < getMaxPlayerPerRoom(); i++)
@@ -54,6 +91,15 @@ bool isChoicesDone(Round *current_round)
     }
     return true;
 }
+
+/**
+ * Initialisation du round
+ *
+ * @param current_game partie en cours
+ * 
+ * @param current_room salle d'attente
+ * 
+ * */
 
 void RoundInitialize(Game *current_game, Room *current_room)
 {
@@ -76,6 +122,13 @@ void RoundInitialize(Game *current_game, Room *current_room)
     }
 }
 
+/**
+ * Initialisation des choix
+ *
+ * @param answers reponses des joueurs
+ * 
+ * */
+
 void GameChoicesInitialize(Answer *answers)
 {
     for (int i = 0; i < getMaxPlayerPerRoom(); i++)
@@ -83,6 +136,17 @@ void GameChoicesInitialize(Answer *answers)
         (answers + i * sizeof(Answer))->choice = -1;
     }
 }
+
+/**
+ * Enregistrement du choix des joueurs
+ *
+ * @param current_room salle d'attente
+ * 
+ * @param player_answer reponse du joueur
+ * 
+ * @param answer_index index de reponse du joueur 
+ * 
+ * */
 
 void AddChoiceToGame(Room *current_room, Answer *player_answer, int answer_index)
 {
@@ -93,6 +157,17 @@ void AddChoiceToGame(Room *current_room, Answer *player_answer, int answer_index
     view_writeAnswerInfo(current_answer);
     CheckNextRound(current_game, current_room, current_round);
 }
+
+/**
+ * Verifie si on passe au round suivant
+ *
+ * @param current_game partie en cours
+ * 
+ * @param current_room salle d'attente
+ * 
+ * @param current_round round en cours
+ * 
+ * */
 
 void CheckNextRound(Game *current_game, Room *current_room, Round *current_round)
 {
