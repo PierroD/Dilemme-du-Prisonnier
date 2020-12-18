@@ -37,11 +37,11 @@ Le fichier de paramétrage du client doit contenir l’adresse IP du serveur ain
 autre paramétrage qui vous sembleront pertinents.
 L’interface graphique des clients doit rester très simple : le cobaye ne doit pas être déconcentré par
 des fioritures : deux boutons cliquables (Trahir, Collaborer), le résultat du round (il doit savoir s’il a
-gagné ou perdu). Il doit être informé du début de chaque roun
+gagné ou perdu). Il doit être informé du début de chaque round.
 
 ### A propos <a name="Propos"></a>
 
-Comme demandé des les consignes nous avons fait en sorte de rendre le code le plus évolutif possible, ainsi si vous voulez rajouter un joueur par partie, ou de faire en sorte qu'il y est plus de 2 parties jouables, vous pouvez directement modifier ces paramètres dans les fichiers de configurations.
+Comme demandé dans les consignes nous avons fait en sorte de rendre le code le plus évolutif possible, ainsi si vous voulez rajouter un joueur par partie, ou de faire en sorte qu'il y est plus de 2 parties jouables, vous pouvez directement modifier ces paramètres dans les fichiers de configuration.
 
 Il était aussi demandé de donner une structure au projet, nous avons choisi le modèle **MVC** (**M**odel **V**iew **C**ontroller), étant une architecture très en vogue dans le monde de l'entreprise et en général nous avons voulu nous en rapprocher le plus possible.
 
@@ -50,14 +50,14 @@ Il était aussi demandé de donner une structure au projet, nous avons choisi le
 - Pour démarrer le serveur :
     - Dans un premier temps assurez que la configuration vous convienne
     - Lancer le serveur (allez dans le dossier build ouvrez un terminal et tapez : ./server)
-    - Une fois les parties finie, vous devez éteindre le serveur et le relancer à nouveau si le nombre de connexion maximum a été atteint suite à son premier lancement 
+    - Une fois les parties finies, vous devez éteindre le serveur et le relancer à nouveau si le nombre de connexion maximum a été atteint suite à son premier lancement 
 
 - Pour le client :
     - Dans un premier temps assurez que la configuration est conforme (Ip du serveur, port, où se trouve la vue)
     - Lancer le client (allez dans le dossier build ouvrez un terminal et tapez : ./client)
-    - Si le serveur n'est pas encore lancé, lancez le ! :smile:
+    - Si le serveur n'est pas encore lancé, lancez-le ! :smile:
     - Une fois connecté, cliquez sur le bouton intitulé "je suis prêt"
-    - Si un deuxième joueur est présent, la partie pourra alors commencé
+    - Si un deuxième joueur est présent, la partie pourra alors commencer
 
 *PS : la gestion des parties est en mode FIFO, donc si 2 joueurs veulent jouer en même temps il est préférable qu'ils se connectent en même temps.*
 
