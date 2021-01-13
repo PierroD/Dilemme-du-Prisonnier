@@ -2,6 +2,8 @@
 
 [![Video de présentation youtube](http://img.youtube.com/vi/1_BvK2cUkgg/0.jpg)](https://www.youtube.com/watch?v=1_BvK2cUkgg)
 
+[Gitlab repository](https://gitlab.com/PierroD/projet_prisonnier)
+
 ### Sommaire
 
 - [Téléchargements](#Download)
